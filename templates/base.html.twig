@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+
+        <title>{% block title %}{% endblock %}</title>
+        
+        <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+
+        {% block stylesheets %}y{% endblock %}
+   
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+      
+        <footer class="footer-distributed">
+
+			<div class="footer-left">
+
+				<div>
+					<i class="fa fa-map-marker"></i>
+					<p><span>B.P 549, Av.Abdelkarim Elkhattabi, </span>Guéliz Marrakech</p>
+				</div>
+
+				<div>
+					<i class="fa fa-envelope"></i>
+					<p>contact@fstg-marrakech.com</p>
+				</div>
+
+			</div>
+
+			<div class="footer-center">
+
+				<div>
+					<i class="fa fa-phone"></i>
+					<p>(+212) 524 43 34 04</p>
+				</div>
+
+				<div>
+					<i class="fa fa-fax"></i>
+					<p>(+212) 524 43 31 70</p>
+				</div>
+
+			</div>
+
+			<div class="footer-right">
+
+				<p class="footer-fstg-logo">
+					<img src="../assets/images/logo.png" width="350px" height="100px">
+				</p>
+
+				<p>©{{ "now" | date('Y')}} Faculté des Sciences et Techniques Marrakech</p>
+			
+
+			</div>
+
+		</footer>
+        {% block javascripts %}{% endblock %}
+    </body>
+    <style>
+        /**
+        * login.css
+        **/
+         @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,300,700);   
+#banner {
+    background-size: cover;
+    background-position: center;
+    height: 530px;
+    position:relative;
+    margin: 0;
+    padding: 0;
+}
+
+  .login-wrap {
+    position: relative;
+    margin: 60px auto;
+    background: rgba(0,0,0,0.6);
+    width: 350px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 10px #333;
+    padding: 15px;
+  }
+    h2 {
+      text-align: center;
+      font-weight: 200;
+      font-size: 2em;
+      margin-top: 10px;
+      color: #f7fafd;
+    }
+    
+    .form {
+      padding-top: 20px;
+    }
+    input{
+        width: 80%;
+        margin-bottom: 25px;
+        height: 40px;
+        border-radius: 5px;
+        outline: 0;
+      }
+    button{
+        width: 100%;
+        margin-bottom: 25px;
+        height: 40px;
+        border-radius: 5px;
+        outline: 0;
+
+        background: #e74c3c;
+        border:none;
+        color: white;
+        font-size: 18px;
+        font-weight: 200;
+        cursor: pointer;
+        transition: box-shadow .4s ease;
+}
+
+        /**
+        * home.css
+        **/
+        
+
+* {
+  font-family: Open Sans;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-distributed{
+	background: #efefef;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+	box-sizing: border-box;
+	width: 100%;
+	text-align: left;
+	font: bold 16px sans-serif;
+	padding: 20px 40px;
+}
+
+.footer-distributed .footer-left,
+.footer-distributed .footer-center,
+.footer-distributed .footer-right{
+	display: inline-block;
+	vertical-align: top;
+}
+
+/* Footer left */
+
+.footer-distributed .footer-left{
+	width: 32%;
+}
+
+.footer-distributed .footer-left p span{
+	display:block;
+	font-weight: normal;
+	font-size:14px;
+	line-height:2;
+}
+
+/* Footer Center */
+
+.footer-distributed .footer-center{
+	width: 32%;
+}
+.footer-distributed .footer-left i,
+.footer-distributed .footer-center i{
+	background-color:  #fff;
+	color: #33383b;
+	font-size: 20px;
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 42px;
+	margin: 10px 15px;
+	vertical-align: middle;
+}
+
+
+.footer-distributed .footer-center i.fa-envelope{
+	font-size: 17px;
+	line-height: 38px;
+}
+
+.footer-distributed .footer-left p,
+.footer-distributed .footer-right p,
+.footer-distributed .footer-center p{
+	display: inline-block;
+	color: #33383b;
+    font-weight:400;
+	vertical-align: middle;
+	margin:0;
+}
+
+/* Footer Right */
+
+.footer-distributed .footer-right{
+	width: 35%;
+}
+
+.footer-distributed .footer-icons{
+	margin-top: 25px;
+}
+
+.footer-distributed .footer-icons a{
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+	background-color:  #33383b;
+	border-radius: 2px;
+
+	font-size: 20px;
+	color: #ffffff;
+	text-align: center;
+	line-height: 35px;
+
+	margin-right: 3px;
+	margin-bottom: 5px;
+}
+
+/*responsive*/
+
+@media screen and (max-width: 880px) {
+
+	.footer-distributed{
+		font: bold 14px sans-serif;
+	}
+
+	.footer-distributed .footer-left,
+	.footer-distributed .footer-center,
+	.footer-distributed .footer-right{
+		display: block;
+		width: 100%;
+		margin-bottom: 40px;     
+		text-align: center;
+	}
+	
+	.footer-distributed .footer-center i{
+		margin-left: 0;
+	}
+
+}
+
+
+    </style>
+</html>
+

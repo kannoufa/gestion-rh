@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Authentification{% endblock %}
+
+{% block body %}
+	<section id="banner">
+		<br><br>
+		<div class="login-wrap">
+			<h2>Se connecter</h2>
+            
+            {% if error %}
+            <div class="alert alert-danger">
+                {{ error.messageKey | trans(error.messageData, 'security') }}
+            </div>
+            {% endif %}
+
+            <form action="{{ path('security_login') }}" method="post" class="form">
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fa fa-user"></i></span>
+                        <input placeholder="username ..." required name="_username" type="text" value="{{ lastUsername }}" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                        <input placeholder="password ..." required name="_password" type="password" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit"><i class="fa fa-sign-in"></i> 
+                        Connexion!
+                    </button>
+                </div>
+            </form>		
+		</div>
+	</section>
+{% endblock %}
+{% block stylesheets %}
+	<style>
+	#banner {
+		background-image: url("../assets/images/fstg.jpg");		 
+	}
+	</style>
+{% endblock %}
+
+
