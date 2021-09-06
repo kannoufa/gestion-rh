@@ -1,0 +1,34 @@
+{% extends 'user/slide.html.twig' %}
+
+{% block title %}Historique{% endblock %}
+ 
+{% block body %}
+         <center><img src="{{asset('assets/images/logo.png')}}" style="align: right; " width="370px"></center>
+        <hr>
+        <h1>historique de mes demandes</h1>     
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                    <th><i class="fa fa-window-maximize " aria-hidden="true"></i> Type de la demande</th>
+                    <th><i class="fa fa-calendar" aria-hidden="true"></i> Date d'envoi</th>
+                    <th><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Date de reçu</th>                   
+                    </tr>
+                </thead>          
+                {% if documents|length > 0 %}
+                <tbody>
+                    {% for document in documents %}
+                        <tr>
+                            <td>Demande {{ document.typeDemande }}</td>
+                            <td>{{ document.dateEnvoi | date('d/m/Y à h:i') }}</td>
+                            <td>{{ document.dateRecu | date('d/m/Y à h:i') }}</td>
+                        </tr>      
+                    {% endfor %}
+                </tbody>
+                </table>
+                {% else %}
+                <center><p class="badge rounded-pill bg-danger">Vous n'avez effectué aucune demande</p></center>
+                {% endif %}
+                <div class="pagination">
+                    {{knp_pagination_render(documents) }}
+                </div>
+{% endblock %}

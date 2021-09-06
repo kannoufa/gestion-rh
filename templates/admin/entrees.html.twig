@@ -1,0 +1,11 @@
+{% extends 'admin/_liste-documents.html.twig' %}
+
+{% block title %}Enregistrements d'entrée{% endblock %}
+
+{% block titre %}Enregistrements d'entrée{% endblock %}
+ 
+{% block buttons %}
+    <a href="{{ path('admin_document', {repo: 'EnregistrementEntree', id: document.id}) }}" class="btn btn-warning btn-sm">
+        <i class="fa fa-eye" aria-hidden="true"></i> Voir
+    </a>
+{% endblock %}

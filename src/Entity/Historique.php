@@ -30,7 +30,17 @@ class Historique
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $nom_prenom;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $typeDemande;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateEnvoi;
 
     /**
      * @ORM\Column(type="datetime")
@@ -66,6 +76,18 @@ class Historique
         return $this;
     }
 
+    public function getNomPrenom(): ?string
+    {
+        return $this->nom_prenom;
+    }
+
+    public function setNomPrenom(string $nom_prenom): self
+    {
+        $this->nom_prenom = $nom_prenom;
+
+        return $this;
+    }
+
     public function getTypeDemande(): ?string
     {
         return $this->typeDemande;
@@ -74,6 +96,18 @@ class Historique
     public function setTypeDemande(string $typeDemande): self
     {
         $this->typeDemande = $typeDemande;
+
+        return $this;
+    }
+
+    public function getDateEnvoi(): ?\DateTime
+    {
+        return $this->dateEnvoi;
+    }
+
+    public function setDateEnvoi(\DateTime $dateEnvoi): self
+    {
+        $this->dateEnvoi = $dateEnvoi;
 
         return $this;
     }

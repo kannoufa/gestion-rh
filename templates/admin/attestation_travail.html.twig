@@ -1,0 +1,41 @@
+{% extends 'admin/slide.html.twig' %}
+
+{% block title %}Attestation de travail{% endblock %}
+ 
+{% block body %}
+    <div id="sectionAimprimer" style="padding:0 40px 0 40px; font-family:times">
+          <center>
+            <img src="{{asset('assets/images/logo.png')}}" width="370px" height="120px">
+          <hr><br><br><br>           
+          <h2>ATTESTATION DE TRAVAIL</h2>
+          <br><br><br>
+          </center>
+          <div style="font-size:20px">
+            <p>N° : {{ document.id }}/{{ "now" | date('Y') }}</p><br>
+            <p style="padding-left:40px">
+              Le Doyen de la Faculté des Sciences et Techniques-Marrakech soussigné, atteste que :
+            </p>                
+              <p>Monsieur : {{ document.nomFr }} {{ document.prenomFr }}</p>
+              <p>P.P.R : {{ document.ppr }}</p>
+              <p>CNIE : {{ document.cni }}</p>
+              <p>Grade : {{ document.grade }}</p>
+            <p>Exerce à la Faculté des Sciences et Techniques depuis le : {{ document.dateFonction | date('d/m/Y') }}</p><br>                
+            <p style="padding-left:40px">La présente attestation est délivrée à la demande de l'intéressé pour servir et valoir ce que de droit.</p><br>
+            <p style="text-align: center;">Fait à Marrakech, le : {{ document.createdAt | date('d/m/Y') }}</p>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+          </div>
+          <hr>
+          <center style="font-size:15px">
+            <p>شارع عبد الكريم الخطابي ص ب 549 مراكـش المغرب- الهاتف :63 31 43 / 04 34 43 24 5(0)/ 11 95 09 70 6(0)  212 فاكس 70 31 43 24 5 (0)212</p>
+            <p>Avenue AbdelkrimKhattabi B.P.549 Marrakech Maroc Tel. : 212(0)6 70 09 95 11 / (0)5 24 43 34 04 / 43 31 63 Fax : 212(0) 5 24 43 31 70</p>       
+          </center>
+    </div>
+</div>
+    <center>
+      <button class="button" onClick="imprimer('sectionAimprimer')">
+        <i class="fa fa-print" aria-hidden="true"></i> Imprimer
+      </button>
+    <center>
+{% endblock %}
+
+

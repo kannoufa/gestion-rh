@@ -1,0 +1,23 @@
+<div class="row"> 
+      <div class="col-md-3">
+        <div class="logo_background">
+            <img src="{{asset('assets/images/logo_bleu.gif')}}" width="320px" class="logo_form"/>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-7 form">
+        <h1>{{ titre }}</h1>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {{ form_start(form) }}
+            <ul class="form-list">
+                <li class="form-list__row">            
+                    {{ form_widget(form) }}
+                </li>
+            </ul>
+            {{ form_end(form) }}
+      </div>
+    </div>

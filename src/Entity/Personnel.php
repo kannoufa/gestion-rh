@@ -19,6 +19,19 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Personnel
 {
+    const SEXEAR = [
+        0 => 'أنثى',
+        1 => 'ذكر',
+    ];
+
+    const SITUATIONFAMILIAIREAR = [
+        0 => 'أعزب',
+        1 => 'متزوج',
+        2 => 'مطلق',
+        3 => 'أرمل',
+    ];
+
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -600,7 +613,7 @@ class Personnel
     {
         return $this->ordres;
     }
-    
+
     public function addOrdre(OrdreMission $ordre): self
     {
         if (!$this->ordres->contains($ordre)) {
@@ -633,5 +646,4 @@ class Personnel
 
         return $this;
     }
-
 }

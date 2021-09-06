@@ -1,0 +1,57 @@
+{% extends 'admin/slide.html.twig' %}
+
+{% block title %}محضر الدخول{% endblock %}
+ 
+{% block body %}
+<div id='sectionAimprimer' dir="rtl" lang="ar"> 
+    <div style="text-align: right; line-height: 1; padding:30px 40px 20px 40px; font-size: 19px; font-family:times">
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; المملكة المغربية </p>
+          <p>وزارة التربية الوطنية والتكوين المهني</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; والبحث العلمي </p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; مديرية الموارد البشرية </p>
+          <br><br>
+       
+      <div>
+          <center><u><h4>
+            يرسل على الطريقة الرسمية<br><br>
+            محضر الدخول </h4> </u>
+          </center>
+      </div>   
+        <b></b>
+        <p>المراسلة الوزارية رقم</p>
+        <p>انا الممضي اسفله &nbsp; : &nbsp; <b>موحى توريرة  </b> </p>
+        <p> الصفة &nbsp; : &nbsp; <b> عميد كلية العلوم و التقنيات - مراكش </b></p>
+          
+          <p>اشهد ان السيد</p>
+          <p> الإسم العائلي &nbsp; : &nbsp;  <b>{{ document.nomar }}</b> &nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;
+              Nom : <b>{{document.personnel.nom}} </b>
+          </p>
+          <p> الإسم الشخصي  &nbsp; : &nbsp; <b>{{ document.prenomar }}</b> &nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp;
+              Prénom : <b>{{document.personnel.prenom}} <b>
+          </p>
+          <p> تاريخ و مكان الازدياد &nbsp; : &nbsp; <b>{{ document.dateNaissanceAr | date('d/m/Y')}} </b></p>
+          <p> الجنسية &nbsp; : &nbsp; <b>{{ document.nationaliteAr }} </b></p>
+          <p>  الحالة العائلية&nbsp; : &nbsp;  <b>{{ document.situationFamilialeAr }} </b></p>
+          <p> الإطار &nbsp; : &nbsp;<b>{{ document.personnel.gradeAr }} </b></p>
+          <p> العنوان الشخصي &nbsp; : &nbsp;<b> {{ document.adresse }} </b></p>
+          <p> ابتدأ العمل بتاريخ &nbsp; : &nbsp;<b> {{ document.dateFonction | date('d/m/Y')}} </b></p>
+          
+          <b><p>في : كلية العلوم و التقنيات - مراكش</p></b>
+          <p>حرر في مراكش &nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; بتاريخ &nbsp; : &nbsp; {{ document.createdAt | date('d/m/Y')}}</p>
+        
+          <b>
+            طابع و إمضاء رئيس المؤسسة &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+            إمضاء الموظف
+          <b>
+          <br><br><br><br>
+    </div>
+</div>
+</div>
+    <center>
+        <button class="button" onClick="imprimer('sectionAimprimer')">
+            <i class="fa fa-print" aria-hidden="true"></i> Imprimer
+        </button>
+    <center>
+{% endblock %}
+
+      

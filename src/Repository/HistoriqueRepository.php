@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query;
 use App\Entity\Historique;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Historique|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +21,30 @@ class HistoriqueRepository extends ServiceEntityRepository
         parent::__construct($registry, Historique::class);
     }
 
-    // /**
-    //  * @return Historique[] Returns an array of Historique objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Query[]
+     */
+    public function findAllVisibleQuery(): Query
     {
-        return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('h.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $query = $this->findVisibleQuery();
 
-    /*
-    public function findOneBySomeField($value): ?Historique
-    {
-        return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $query->getQuery();
     }
-    */
+
+    /**
+     * @return Query[]
+     */
+    public function findbyUserIdQuery($id): Query
+    {
+        $query = $this->findVisibleQuery();
+        $query = $query
+            ->andWhere('p.idUser = :id')
+            ->setParameter('id', $id);
+
+        return $query->getQuery();
+    }
+    private function findVisibleQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('p');
+    }
 }

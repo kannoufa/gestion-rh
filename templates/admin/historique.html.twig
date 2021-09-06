@@ -1,0 +1,43 @@
+{% extends 'admin/slide.html.twig' %}
+
+{% block title %}historique des demandes{% endblock %}
+ 
+{% block body %}
+        <center><img src="https://www.studengo.com/assets/img/uniimages/Dessin12facsciencemarac_logo.png" style="align: right; " width=270px></center>
+        <hr>
+        <h1>historique des demandes effectués</h1>     
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                    <th><i class="fa fa-user " aria-hidden="true"></i> Personnel</th>
+                    <th><i class="fa fa-window-maximize " aria-hidden="true"></i> Type de la demande</th>
+                    <th><i class="fa fa-calendar" aria-hidden="true"></i> Date d'envoi</th>
+                    <th><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Date de reçu</th>
+                    <th>Voir la demande</th>
+                    </tr>
+                </thead>
+                {% if documents|length > 0 %}
+                <tbody>
+                    {% for document in documents %}
+                        <tr>
+                            <td>{{ document.nomPrenom}}</td>
+                            <td>Demande {{ document.typeDemande }}</td>
+                            <td>{{ document.dateEnvoi | date('d/m/Y à h:i') }}</td>
+                            <td>{{ document.dateRecu | date('d/m/Y à h:i') }}</td>
+                            <td>
+                                <a href="{{ path('admin_document', {repo: document.typeDemande, id: document.idDemande}) }}" class="btn btn-warning btn-sm">
+                                    <i class="fa fa-eye" aria-hidden="true"></i > Voir
+                                </a>
+                            </td>
+                        </tr>      
+                    {% endfor %}
+                </tbody>
+                </table>
+                {% else %}
+                <center><p class="badge rounded-pill bg-danger">Il n'y a aucune demande</p></center>
+                {% endif %}
+                <div class="pagination">
+                    {{knp_pagination_render(documents) }}
+                </div><br>
+</div>
+{% endblock %}

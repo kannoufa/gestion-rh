@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query;
 use App\Entity\Personnel;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Personnel|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +19,21 @@ class PersonnelRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Personnel::class);
+    }
+
+    /**
+    * @return Query[]
+    */
+    public function findAllVisibleQuery() : Query
+    {
+        return $this->findVisibleQuery()
+            ->getQuery()
+        ;
+    }
+
+    private function findVisibleQuery() : QueryBuilder
+    {
+        return $this->createQueryBuilder('p');
     }
 
     // /**

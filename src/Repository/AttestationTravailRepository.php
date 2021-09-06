@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use App\Entity\AttestationTravail;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method AttestationTravail|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +19,40 @@ class AttestationTravailRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, AttestationTravail::class);
+    }
+
+    /**
+     * @return Query[]
+     */
+    public function findAllVisibleQuery(): Query
+    {
+        $query = $this->findVisibleQuery();
+        $query = $query
+            ->andWhere('p.statut <> :statut')
+            ->setParameter('statut', 'reçu');
+
+        return $query->getQuery();
+    }
+
+    private function findVisibleQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('p');
+    }
+
+    /**
+     * @return Attestationtravail[]
+     */
+    public function getAttestationtravailUnready(): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT a
+            FROM App\Entity\Attestationtravail a
+            WHERE a.status <> :status'
+        )->setParameter('status', 'reçu');
+
+        return $query->getResult();
     }
 
     // /**

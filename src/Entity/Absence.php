@@ -11,6 +11,22 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Absence
 {
+    const FILIERE = [
+        0 => 'الرياضيات',
+        1 => 'الفيزياء التطبيقية',
+        2 => 'البيولوجيا',
+        3 => 'الاعلاميات',
+        4 => 'علوم الأرض',
+        5 => 'الهندسة المدنية',
+        6 => 'تقنية التواصل',
+        7 => 'العلوم الكيميائية',
+    ];
+
+    const CAUSE = [
+        0 => 'مرض',
+        1 => 'رخصة إستثنائية',
+        2 => 'الإجازة السنوية'
+    ];
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -196,5 +212,15 @@ class Absence
         $this->personnel = $personnel;
 
         return $this;
+    }
+
+    public function getFiliereType(): string
+    {
+        return self::FILIERE[$this->filiere];
+    }
+
+    public function getCauseType(): string
+    {
+        return self::CAUSE[$this->cause];
     }
 }

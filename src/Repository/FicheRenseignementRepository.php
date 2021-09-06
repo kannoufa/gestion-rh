@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use App\Entity\FicheRenseignement;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method FicheRenseignement|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +19,21 @@ class FicheRenseignementRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, FicheRenseignement::class);
+    }
+
+    /**
+    * @return Query[]
+    */
+    public function findAllVisibleQuery() : Query
+    {
+        return $this->findVisibleQuery()
+            ->getQuery()
+        ;
+    }
+
+    private function findVisibleQuery() : QueryBuilder
+    {
+        return $this->createQueryBuilder('p');
     }
 
     // /**

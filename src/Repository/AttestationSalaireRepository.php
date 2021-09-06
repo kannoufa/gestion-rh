@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use App\Entity\AttestationSalaire;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method AttestationSalaire|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +19,24 @@ class AttestationSalaireRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, AttestationSalaire::class);
+    }
+
+    /**
+     * @return Query[]
+     */
+    public function findAllVisibleQuery(): Query
+    {
+        $query = $this->findVisibleQuery();
+        $query = $query
+            ->andWhere('p.statut <> :statut')
+            ->setParameter('statut', 'reçu');
+
+        return $query->getQuery();
+    }
+
+    private function findVisibleQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('p');
     }
 
     // /**

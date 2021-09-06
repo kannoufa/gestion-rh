@@ -11,6 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class OrdreMission
 {
+    const FRAIS = [
+        0 => 'Sans frais',
+        1 => 'Avec les frais',
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
