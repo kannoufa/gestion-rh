@@ -16,6 +16,9 @@
     <a href="{{ path('admin_document', {repo: 'OrdreMission', id: document.id}) }}" class="btn btn-warning btn-sm">
         <i class="fa fa-eye" aria-hidden="true"></i> Voir
     </a>
+    <a href="{{ path('admin_change_statut', {repo: 'OrdreMission', id: document.id, etat: 'Refusé par l\'administration'}) }}" class="btn btn-danger btn-sm">
+        <i class="fa fa-times" aria-hidden="true"></i> Refusé
+    </a>
     <a href="{{ path('admin_change_statut', {repo: 'OrdreMission', id: document.id, etat: 'Disponible'}) }}" class="btn btn-info btn-sm">
         <i class="fa fa-hourglass-end" aria-hidden="true"></i> Disponible
     </a>

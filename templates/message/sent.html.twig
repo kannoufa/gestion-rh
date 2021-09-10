@@ -1,0 +1,34 @@
+{% extends 'basemess.html.twig' %}
+
+
+{% block body %}   
+                          <table class="table table-inbox table-hover">
+                            <tbody>
+							{% for message in app.user.sent %} 
+                              <tr class="unread">
+                                  <td class="inbox-small-cells">
+                                      {# <input type="checkbox" class="mail-checkbox"> #}
+                                       <a href="{{ path("delete", {id: message.id}) }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-excel-fill text-danger" viewbox="0 0 16 16">
+                            <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5.884 4.68L8 7.219l2.116-2.54a.5.5 0 1 1 .768.641L8.651 8l2.233 2.68a.5.5 0 0 1-.768.64L8 8.781l-2.116 2.54a.5.5 0 0 1-.768-.641L7.349 8 5.116 5.32a.5.5 0 1 1 .768-.64z"/>
+                        </svg>
+                    </a>
+                                  </td>
+                                  <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
+                                  <td class="view-message  dont-show">{{ message.title }}</td>
+                                  <td class="view-message  dont-show">A : {{ message.recipient.username }}</td>
+                                  <td class="view-message "><a href="{{ path("read", {id: message.id}) }}">Lire le message</a></td>
+                                  <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
+                                  <td class="view-message  text-right">{{ message.createdAt|date }}</td>
+                              </tr>
+                              {% endfor %}
+                          </tbody>
+                          </table>
+
+                      </div>
+                  </aside>
+              </div>
+</div>
+
+
+{% endblock %}

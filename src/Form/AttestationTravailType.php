@@ -13,9 +13,10 @@ class AttestationTravailType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('submit', SubmitType::class, [
-                'attr' => [],
-            ]);
+            ->add(
+                'Envoyer',
+                SubmitType::class,
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)

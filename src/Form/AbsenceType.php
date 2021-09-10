@@ -3,12 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Absence;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 
@@ -17,33 +19,26 @@ class AbsenceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('filiere', ChoiceType::class, [
-                'choices' => $this->getFilieres(),
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
             ->add('cause', ChoiceType::class, [
                 'choices' => $this->getCauses(),
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control text-right'
                 ]
             ])
             ->add('duree', TextType::class, [
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'عدد الأيام...',
-                    'class' => 'form-control'
+                    'placeholder' => '... عدد الأيام',
+                    'class' => 'form-control text-right'
                 ],
             ])
             ->add('apartir', TextType::class, [
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'jj/mm/aaaa ابتداءا من',
-                    'class' => 'form-control'
+                    'class' => 'form-control text-right'
                 ],
-            ])
-            ->add('Envoyer', SubmitType::class);
+            ])->add('Envoyer', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -56,11 +51,7 @@ class AbsenceType extends AbstractType
     public function getFilieres()
     {
         $filieres = Absence::FILIERE;
-        $output = [];
-        foreach ($filieres as $key => $value) {
-            $output[$value] = $key;
-        }
-        return $output;
+        return $filieres;
     }
 
     public function getCauses()

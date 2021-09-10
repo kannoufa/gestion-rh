@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\User;
 use App\Entity\OrdreMission;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -28,20 +29,6 @@ class OrdreMissionType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'destination de la mission (adresse) ...',
-                    'class' => 'form-control'
-                ],
-            ])
-            ->add('transport', TextType::class, [
-                'required' => true,
-                'attr' => [
-                    'placeholder' => 'matricule du transport ...',
-                    'class' => 'form-control'
-                ],
-            ])
-            ->add('chauffeur', TextType::class, [
-                'required' => true,
-                'attr' => [
-                    'placeholder' => 'nom et prénom du chauffeur ...',
                     'class' => 'form-control'
                 ],
             ])

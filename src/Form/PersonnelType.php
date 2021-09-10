@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -179,14 +180,14 @@ class PersonnelType extends AbstractType
                     'class' => 'form-control'
                 ],
             ])
-            ->add('email', TextType::class, [
+            ->add('email', EmailType::class, [
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'email ...',
                     'class' => 'form-control'
                 ],
             ])
-            ->add('Ajouter', SubmitType::class);
+            ->add('Enregistrer', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

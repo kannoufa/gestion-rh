@@ -8,10 +8,11 @@
         <h1>historique de mes demandes</h1>     
             <table class="table table-striped">
                 <thead>
-                    <tr>
+                    <tr class="table-primary">
                     <th><i class="fa fa-window-maximize " aria-hidden="true"></i> Type de la demande</th>
                     <th><i class="fa fa-calendar" aria-hidden="true"></i> Date d'envoi</th>
-                    <th><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Date de reçu</th>                   
+                    <th><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Date de reçu/refus</th>                   
+                    <th><i class="fa fa-bell-o" aria-hidden="true"></i> Statut</th>                   
                     </tr>
                 </thead>          
                 {% if documents|length > 0 %}
@@ -21,6 +22,7 @@
                             <td>Demande {{ document.typeDemande }}</td>
                             <td>{{ document.dateEnvoi | date('d/m/Y à h:i') }}</td>
                             <td>{{ document.dateRecu | date('d/m/Y à h:i') }}</td>
+                            <td><span class="btn btn-sm rounded-pill btn-info">{{ document.statut}}</span></td>
                         </tr>      
                     {% endfor %}
                 </tbody>

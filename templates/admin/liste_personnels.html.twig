@@ -6,12 +6,18 @@
 <center><img src="https://www.studengo.com/assets/img/uniimages/Dessin12facsciencemarac_logo.png" style="align: right; " width=270px></center>
 <hr>
 <h1>Liste des personnels</h1>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
 <table class="table table-striped">
     <thead>
         <tr>
             <th>Ppr</th>
             <th><i class="fa fa-vcard-o" aria-hidden="true"></i> Nom et Prénom</th>
             <th><i class="fa fa-calendar" aria-hidden="true"></i> Date de fonction</th>
+            <th><i class="fa fa-file" aria-hidden="true"></i> Fiche de renseignement</th>
             <th><i class="fa fa-gears" aria-hidden="true"></i> Actions</th>
         </tr>
     </thead>
@@ -22,6 +28,11 @@
                 <td>{{personnel.nom}} {{personnel.prenom}}</td>
                 <td>{{personnel.dateFonction | date('d/m/Y')}}</td>
                 <td>
+                    <a href="{{ path('admin_document', {repo: 'FicheRenseignement', id: personnel.id}) }}" class="btn btn-warning btn-sm">
+                        <i class="fa fa-eye" aria-hidden="true"></i> Voir
+                    </a>
+                </td>
+                <td>
                     <a href="{{ path('admin_document', {repo: 'Personnel', id: personnel.id}) }}" class="btn btn-info btn-sm">
                         <i class="fa fa-info" aria-hidden="true"></i> Voir le profil
                     </a>
@@ -29,7 +40,7 @@
                         <i class="fa fa-pencil" aria-hidden="true"></i> Modifier le profil
                     </a>
                     <a href="{{ path('admin_delete_personnel', {id: personnel.id}) }}" class="btn btn-danger btn-sm">
-                        <i class="fa fa-trash" aria-hidden="true"></i> Supprimer le personnel
+                        <i class="fa fa-trash" aria-hidden="true"></i> Supprimer le compte du personnel
                     </a>  
                 </td>
             </tr>

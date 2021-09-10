@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\DemandeValidationType;
 use Pusher\Pusher;
 use App\Service\FormService;
 use App\Service\StatutService;
@@ -31,13 +32,15 @@ class UserController extends AbstractController
     {
         $array = $service->getRepository($repo);
         $form = $this->createForm($array['type'], $array['document']);
-
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', $service->registerForm($array['document'], $this->getUser(), $repo));
+            $tab = [];
+            if ($repo == 'OrdreMission') $tab = ['transport' => $request->get("transport"), 'matricule' => $request->get("matricule")];
+            $this->addFlash('success', $service->registerForm($array['document'], $this->getUser(), $repo, $tab));
             return $this->redirectToRoute('user_demande_document', ['repo' => $repo]);
         }
         return $this->render('user/demande_document.html.twig', [
+            'user' => 'user',
             'form' => $form->createView(),
             'titre' => $array['titre'],
         ]);
@@ -71,5 +74,22 @@ class UserController extends AbstractController
     {
         $pusher->trigger('greetings', 'new-greeting', []);
         return new Response();
+    }
+
+    /**
+     * @Route("/user/validation/{repo}/{id}", name="user_document")
+     * @Route("/user/validation/{repo}/{id}/{etat}/change-statut", name="user_change_statut")
+     */
+    public function document($repo, $id, $etat = null, StatutService $service): Response
+    {
+        if ($etat) {
+            $array = $service->changeStatut($repo, $id, $etat);
+            $this->addFlash('success', 'Enregistrer avec succès');
+            return $this->redirectToRoute('user_document', ['repo' => $repo, 'id' => $id]);
+        }
+
+        return $this->render($service->getRepository($repo)['twig_validation'], [
+            'document' => $service->getDocument($repo, $id),
+        ]);
     }
 }

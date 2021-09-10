@@ -49,6 +49,7 @@ class StatutService
 
     public function getRepository($repo)
     {
+        $twig_validation = '';
         if ($repo == 'AttestationTravail') {
             $repository = $this->attestationTravailRepository;
             $twig_document = 'admin/attestation_travail.html.twig';
@@ -62,11 +63,13 @@ class StatutService
         if ($repo == 'Absence') {
             $repository = $this->absenceRepository;
             $twig_document = 'admin/absence.html.twig';
+            $twig_validation = 'user/validation_absence.html.twig';
             $twig_liste_document = 'admin/absences.html.twig';
         }
         if ($repo == 'OrdreMission') {
             $repository = $this->ordreMissionRepository;
             $twig_document = 'admin/ordre.html.twig';
+            $twig_validation = 'user/validation_ordre.html.twig';
             $twig_liste_document = 'admin/ordres.html.twig';
         }
         if ($repo == 'FicheRenseignement') {
@@ -94,6 +97,7 @@ class StatutService
             'repository' => $repository,
             'twig_document' => $twig_document,
             'twig_liste_document' => $twig_liste_document,
+            'twig_validation' => $twig_validation
         ];
     }
 
@@ -103,11 +107,31 @@ class StatutService
             $document = $this->getRepository($repo)['repository']->find($id);
             if ($etat == 'Voir') {
                 $statut = $document->getStatut();
-                if ($statut == 'Nouveau demande')
+                if ($statut == 'Nouveau demande' || $statut == 'Validé par le département')
                     $statut = 'en cours de traitement';
             }
             if ($etat == 'Disponible') {
                 $statut = 'Disponible';
+            }
+            if ($etat == 'Validé par le département') {
+                $statut = 'Validé par le département';
+            }
+            if ($etat == 'Refusé par le département') {
+                $statut = 'Refusé par le département';
+            }
+            if ($etat == 'Refusé par l\'administration') {
+                $statut = 'Refusé par l\'administration';
+                // Si la demande est Refusé par l'administration on l'enregistre dans l'historique
+                $historique = new Historique();
+                $historique->setIdDemande($id)
+                    ->setIdUser($document->getPersonnel()->getId())
+                    ->setNomPrenom($document->getPersonnel()->getNom() . ' ' . $document->getPersonnel()->getPrenom())
+                    ->setTypeDemande($repo)
+                    ->setDateEnvoi($document->getCreatedAt())
+                    ->setDateRecu(new DateTime())
+                    ->setStatut('Refusé');
+                $this->entityManager->persist($historique);
+                $this->entityManager->flush();
             }
             if ($etat == 'Reçu') {
                 $statut = 'Reçu';
@@ -118,7 +142,8 @@ class StatutService
                     ->setNomPrenom($document->getPersonnel()->getNom() . ' ' . $document->getPersonnel()->getPrenom())
                     ->setTypeDemande($repo)
                     ->setDateEnvoi($document->getCreatedAt())
-                    ->setDateRecu(new DateTime());
+                    ->setDateRecu(new DateTime())
+                    ->setStatut('Reçu');
                 $this->entityManager->persist($historique);
                 $this->entityManager->flush();
             }
@@ -132,19 +157,36 @@ class StatutService
     public function getDocument($repo, $id)
     {
         $repository = $this->changeStatut($repo, $id, 'Voir')['repository'];
-        return $repository->find($id);
+        if ($repo == 'FicheRenseignement')
+            $document = $document = $repository->findOneBy([
+                'personnel' => $id,
+            ]);
+        else
+            $document = $repository->find($id);
+        return $document;
     }
 
-    public function getListeDocuments($repo, $request)
+    public function getListeDocuments($repo, $request, $search)
     {
-        $documents = $this->paginator->paginate(
-            $this->getRepository($repo)['repository']->findAllVisibleQuery(),
-            $request->query->getInt('page', 1),
-            5
-        );
+        if ($repo != null) {
+            $documents = $this->paginator->paginate(
+                $this->getRepository($repo)['repository']->findAllVisibleQuery(),
+                $request->query->getInt('page', 1),
+                5
+            );
+            $twig = $this->getRepository($repo)['twig_liste_document'];
+        } else {
+            $documents = $this->paginator->paginate(
+                $this->absenceRepository->findAbsenceRecu($search),
+                $request->query->getInt('page', 1),
+                10
+            );
+            $twig = "admin/tab_absence.html.twig";
+        }
+
 
         return [
-            'twig' => $this->getRepository($repo)['twig_liste_document'],
+            'twig' => $twig,
             'documents' => $documents
         ];
     }

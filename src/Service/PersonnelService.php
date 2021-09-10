@@ -33,6 +33,7 @@ class PersonnelService
         $user = new User();
         $role = ["ROLE_USER"];
         $user->setPersonnel($personnel)
+            ->setEmail($personnel->getEmail())
             ->setUsername($personnel->getNom() . ' ' . $personnel->getPrenom())
             ->setPassword($this->encoder->encodePassword($user, $personnel->getPpr()))
             ->setRoles($role);

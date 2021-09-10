@@ -28,8 +28,10 @@ class OrdreMissionRepository extends ServiceEntityRepository
     {
         $query = $this->findVisibleQuery();
         $query = $query
-            ->andWhere('p.statut <> :statut')
-            ->setParameter('statut', 'reçu');
+            ->andWhere('p.statut <> :statut1')
+            ->andWhere('p.statut <> :statut2')
+            ->setParameter('statut1', 'reçu')
+            ->setParameter('statut2', 'Refusé par l\'administration');
 
         return $query->getQuery();
     }
@@ -37,6 +39,19 @@ class OrdreMissionRepository extends ServiceEntityRepository
     private function findVisibleQuery(): QueryBuilder
     {
         return $this->createQueryBuilder('p');
+    }
+
+    /**
+     * @return Absence|null
+     */
+    public function findLastInserted()
+    {
+        return $this
+            ->createQueryBuilder("p")
+            ->orderBy("p.id", "DESC")
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     // /**

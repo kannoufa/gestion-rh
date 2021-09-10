@@ -98,6 +98,23 @@ class OrdreMission
      */
     private $statut;
 
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $brochureFilename;
+
+    public function getBrochureFilename()
+    {
+        return $this->brochureFilename;
+    }
+
+    public function setBrochureFilename($brochureFilename)
+    {
+        $this->brochureFilename = $brochureFilename;
+
+        return $this;
+    }
+
     public function __construct()
     {
         $this->created_at = new \DateTime();

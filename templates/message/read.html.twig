@@ -1,0 +1,29 @@
+
+{% extends 'user/slide.html.twig' %}
+
+{% block title %}
+    {{message.title}}
+{% endblock %}
+{% block body %}
+         <center><img src="{{asset('assets/images/logo.png')}}" style="align: right; " width="370px"></center>
+        <hr>
+        <h1>Messagerie</h1> 
+            <h4> {{ message.title }}</h4>
+            <small>Envoyé par {{ message.sender }} à {{message.createdAt | date}}</small>
+
+            
+            <hr>
+            <h6> {{ message.message | raw }}</h6></div>
+           
+                                 
+<br>
+								 
+                                  
+
+                      </div>
+                  </aside>
+              </div>
+</div>
+
+
+{% endblock %}

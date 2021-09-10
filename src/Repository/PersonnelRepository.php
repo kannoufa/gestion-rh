@@ -22,18 +22,30 @@ class PersonnelRepository extends ServiceEntityRepository
     }
 
     /**
-    * @return Query[]
-    */
-    public function findAllVisibleQuery() : Query
+     * @return Query[]
+     */
+    public function findAllVisibleQuery(): Query
     {
         return $this->findVisibleQuery()
-            ->getQuery()
-        ;
+            ->getQuery();
     }
 
-    private function findVisibleQuery() : QueryBuilder
+    private function findVisibleQuery(): QueryBuilder
     {
         return $this->createQueryBuilder('p');
+    }
+
+    /**
+     * @return Personnel|null
+     */
+    public function findLastInserted()
+    {
+        return $this
+            ->createQueryBuilder("p")
+            ->orderBy("p.id", "DESC")
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     // /**

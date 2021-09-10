@@ -47,6 +47,11 @@ class Historique
      */
     private $dateRecu;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $statut;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +125,18 @@ class Historique
     public function setDateRecu(\DateTime $dateRecu): self
     {
         $this->dateRecu = $dateRecu;
+
+        return $this;
+    }
+
+    public function getStatut(): ?string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(string $statut): self
+    {
+        $this->statut = $statut;
 
         return $this;
     }

@@ -64,6 +64,12 @@ class User implements UserInterface, \Serializable
     private $password;
 
     /**
+     * @ORM\Column(type="string", length=50)
+     * @Assert\Email()
+     */
+    private $email;
+
+    /**
      * @ORM\Column(type="array")
      */
     private $roles = [];
@@ -103,6 +109,18 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
     public function getRoles(): ?array
     {
         $roles = $this->roles;
@@ -121,9 +139,13 @@ class User implements UserInterface, \Serializable
         return $this->username;
     }
 
-    public function eraseCredentials(){}
+    public function eraseCredentials()
+    {
+    }
 
-    public function getSalt(){}
+    public function getSalt()
+    {
+    }
 
     public function serialize()
     {
@@ -131,7 +153,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password
-        ]);        
+        ]);
     }
 
     public function unserialize($serialized)
@@ -213,5 +235,9 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
-    
+
+    public function __toString()
+    {
+        return $this->username;
+    }
 }

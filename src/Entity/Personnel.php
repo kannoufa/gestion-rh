@@ -140,6 +140,12 @@ class Personnel
      */
     private $date_effet_echelon;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity=DepartementService::class, inversedBy="chef")
+     */
+    private $departementService;
+
     /**
      * @ORM\Column(type="string", length=50)
      */
@@ -205,6 +211,23 @@ class Personnel
      * @Assert\Email()
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $brochureFilename;
+
+    public function getBrochureFilename()
+    {
+        return $this->brochureFilename;
+    }
+
+    public function setBrochureFilename($brochureFilename)
+    {
+        $this->brochureFilename = $brochureFilename;
+
+        return $this;
+    }
 
     public function __construct()
     {
@@ -287,6 +310,18 @@ class Personnel
     public function setPrenomAr(?string $prenom_ar): self
     {
         $this->prenom_ar = $prenom_ar;
+
+        return $this;
+    }
+
+    public function getDepartementService(): ?DepartementService
+    {
+        return $this->departementService;
+    }
+
+    public function setDepartementService(?DepartementService $departementService): self
+    {
+        $this->departementService = $departementService;
 
         return $this;
     }

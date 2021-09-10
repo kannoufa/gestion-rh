@@ -1,8 +1,13 @@
-{% extends 'admin/slide.html.twig' %}
+{% extends 'user/slide.html.twig' %}
 
 {% block title %}Ordre de mission{% endblock %}
  
 {% block body %}
+    {% for message in app.flashes('success') %}
+            <div class="alert alert-success text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
     <div id="sectionAimprimer" style="padding:0 40px 0 40px; font-family:times">
         <div>
             <b> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Royaume du Maroc<br>
@@ -46,23 +51,17 @@
             <br>
         </div>
     </div>
-    {% if document.transport == 'Transport universitaire' and  document.statut != '' %}
-            <form action="{{ path('admin_setChauffeur', {id: document.id}) }}" method="POST" class="alert alert-light">
-                <div class="row">
-                <div class="col-md-8">
-                    <input type="text" class='form-control' placeholder="Ajouter le chauffeur pour cette mission" name="chauffeur">
-                </div>
-                <div class="col-md-4">
-                    <button type="submit" class="btn btn-success btn-search">Ajouter</button>
-                </div>
-                </div>
-            </form>
-        {% endif %}
 </div>
     <center>
-      <button class="button" onClick="imprimer('sectionAimprimer')">
+      <button class="btn btn-warning" onClick="imprimer('sectionAimprimer')">
         <i class="fa fa-print" aria-hidden="true"></i> Imprimer
       </button>
+      <a href="{{ path('user_change_statut', {repo: 'OrdreMission', id: document.id, etat: 'Validé par le département'}) }}" class="btn btn-success">
+            <i class="fa fa-print" aria-hidden="true"></i> Validé
+        </a>
+        <a href="{{ path('user_change_statut', {repo: 'OrdreMission', id: document.id, etat: 'Refusé par le département'}) }}" class="btn btn-danger">
+            <i class="fa fa-print" aria-hidden="true"></i> Refusé 
+        </a>
     <center>
 
 {% endblock %}

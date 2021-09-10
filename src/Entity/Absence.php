@@ -20,12 +20,12 @@ class Absence
         5 => 'الهندسة المدنية',
         6 => 'تقنية التواصل',
         7 => 'العلوم الكيميائية',
+        8 => 'مصلحة الموارد البشرية',
     ];
 
     const CAUSE = [
         0 => 'مرض',
         1 => 'رخصة إستثنائية',
-        2 => 'الإجازة السنوية'
     ];
     /**
      * @ORM\Id
@@ -65,7 +65,7 @@ class Absence
     private $cause;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
     private $duree;
 
@@ -73,6 +73,11 @@ class Absence
      * @ORM\Column(type="string", length=255)
      */
     private $apartir;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $ppr;
 
     /**
      * @ORM\Column(type="datetime")
@@ -83,6 +88,23 @@ class Absence
      * @ORM\Column(type="string", length=255)
      */
     private $statut;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $brochureFilename;
+
+    public function getBrochureFilename()
+    {
+        return $this->brochureFilename;
+    }
+
+    public function setBrochureFilename($brochureFilename)
+    {
+        $this->brochureFilename = $brochureFilename;
+
+        return $this;
+    }
 
     public function __construct()
     {
@@ -126,6 +148,18 @@ class Absence
     public function setFiliere(string $filiere): self
     {
         $this->filiere = $filiere;
+
+        return $this;
+    }
+
+    public function getPr(): ?string
+    {
+        return $this->ppr;
+    }
+
+    public function setPpr(string $ppr): self
+    {
+        $this->ppr = $ppr;
 
         return $this;
     }

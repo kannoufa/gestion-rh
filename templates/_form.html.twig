@@ -14,10 +14,24 @@
         {% endfor %}
         {{ form_start(form) }}
             <ul class="form-list">
+            {% if titre == 'Ordre de mission' %}
+                    <li>
+                    <label class="form-label label">Transport</label>
+                    <select class="form-select form-control" name="transport">
+                        <option>Transport public</option>
+                        <option>Voiture personnel</option>
+                        <option>Transport universitaire</option>
+                    </select>
+                    </li>
+                    <label class="form-label text-danger"> ** Si vous utilisez votre voiture comme transport, merci d'ajouter le matricule. Sinon laissez ce champs vide</label>
+                    <li>
+                        <input type="text" class='form-control' placeholder="matricule ..." name="matricule">
+                    </li>
+      {% endif %}
                 <li class="form-list__row">            
                     {{ form_widget(form) }}
                 </li>
             </ul>
-            {{ form_end(form) }}
+        {{ form_end(form) }}
       </div>
     </div>

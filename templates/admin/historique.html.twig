@@ -12,7 +12,8 @@
                     <th><i class="fa fa-user " aria-hidden="true"></i> Personnel</th>
                     <th><i class="fa fa-window-maximize " aria-hidden="true"></i> Type de la demande</th>
                     <th><i class="fa fa-calendar" aria-hidden="true"></i> Date d'envoi</th>
-                    <th><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Date de reçu</th>
+                    <th><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Date de reçu/Refus</th>
+                    <th><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Statut</th>
                     <th>Voir la demande</th>
                     </tr>
                 </thead>
@@ -24,6 +25,7 @@
                             <td>Demande {{ document.typeDemande }}</td>
                             <td>{{ document.dateEnvoi | date('d/m/Y à h:i') }}</td>
                             <td>{{ document.dateRecu | date('d/m/Y à h:i') }}</td>
+                            <td><span class="btn btn-sm rounded-pill btn-info">{{ document.statut}}</span></td>
                             <td>
                                 <a href="{{ path('admin_document', {repo: document.typeDemande, id: document.idDemande}) }}" class="btn btn-warning btn-sm">
                                     <i class="fa fa-eye" aria-hidden="true"></i > Voir
