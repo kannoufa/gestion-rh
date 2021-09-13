@@ -5,7 +5,8 @@
         <h1>
             Données de {{document.nom}} {{document.prenom}}
         </h1>
-
+        <a href="{{ asset('uploads/brochures/' ~ document.brochureFilename) }}">Voir la photo</a>
+        
         <div class="row">
             <div class="col-md-4">  
                 <table class="table table-light">

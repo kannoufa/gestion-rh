@@ -11,6 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AttestationSalaire
 {
+    const TYPE = [
+        0 => 'Mois Actuel',
+        1 => 'Trimmeste Actuel',
+        2 => 'Annee Actuelle',
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -18,12 +24,12 @@ class AttestationSalaire
      */
     private $id;
 
-    
+
     /**
      * @ORM\ManyToOne(targetEntity=Personnel::class, inversedBy="attestations_salaire")
      */
     private $personnel;
-    
+
 
     /**
      * @ORM\Column(type="datetime")
@@ -34,6 +40,23 @@ class AttestationSalaire
      * @ORM\Column(type="string", length=255)
      */
     private $statut;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $type;
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
 
     public function __construct()
     {

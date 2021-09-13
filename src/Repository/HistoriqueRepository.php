@@ -26,7 +26,8 @@ class HistoriqueRepository extends ServiceEntityRepository
      */
     public function findAllVisibleQuery(): Query
     {
-        $query = $this->findVisibleQuery();
+        $query = $this->findVisibleQuery()
+            ->orderBy("p.dateRecu", "DESC");
 
         return $query->getQuery();
     }
@@ -39,7 +40,8 @@ class HistoriqueRepository extends ServiceEntityRepository
         $query = $this->findVisibleQuery();
         $query = $query
             ->andWhere('p.idUser = :id')
-            ->setParameter('id', $id);
+            ->setParameter('id', $id)
+            ->orderBy("p.dateRecu", "DESC");
 
         return $query->getQuery();
     }

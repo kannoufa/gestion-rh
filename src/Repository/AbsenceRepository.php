@@ -32,7 +32,8 @@ class AbsenceRepository extends ServiceEntityRepository
             ->andWhere('p.statut <> :statut1')
             ->andWhere('p.statut <> :statut2')
             ->setParameter('statut1', 'Reçu')
-            ->setParameter('statut2', 'Refusé par l\'administration');
+            ->setParameter('statut2', 'Refusé par l\'administration')
+            ->orderBy("p.created_at", "DESC");
 
         return $query->getQuery();
     }
@@ -66,38 +67,10 @@ class AbsenceRepository extends ServiceEntityRepository
                 ->andWhere('p.ppr = :ppr')
                 ->andWhere('p.statut = :statut')
                 ->setParameter('statut', 'Reçu')
-                ->setParameter('ppr', $search->getPpr());
+                ->setParameter('ppr', $search->getPpr())
+                ->orderBy("p.created_at", "DESC");
         }
 
         return $query->getQuery();
     }
-
-    // /**
-    //  * @return Absence[] Returns an array of Absence objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Absence
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

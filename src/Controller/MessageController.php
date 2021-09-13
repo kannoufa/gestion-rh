@@ -22,7 +22,6 @@ class MessageController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(User::class);
         $users = $repo->findAll();
         return $this->render('message/index.html.twig', [
-            'controller_name' => 'MessageController',
             'users' => $users,
 
         ]);

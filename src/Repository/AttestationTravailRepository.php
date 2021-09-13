@@ -29,7 +29,8 @@ class AttestationTravailRepository extends ServiceEntityRepository
         $query = $this->findVisibleQuery();
         $query = $query
             ->andWhere('p.statut <> :statut')
-            ->setParameter('statut', 'reçu');
+            ->setParameter('statut', 'Reçu')
+            ->orderBy("p.created_at", "DESC");
 
         return $query->getQuery();
     }
@@ -38,49 +39,4 @@ class AttestationTravailRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p');
     }
-
-    /**
-     * @return Attestationtravail[]
-     */
-    public function getAttestationtravailUnready(): array
-    {
-        $entityManager = $this->getEntityManager();
-
-        $query = $entityManager->createQuery(
-            'SELECT a
-            FROM App\Entity\Attestationtravail a
-            WHERE a.status <> :status'
-        )->setParameter('status', 'reçu');
-
-        return $query->getResult();
-    }
-
-    // /**
-    //  * @return AttestationTravail[] Returns an array of AttestationTravail objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?AttestationTravail
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

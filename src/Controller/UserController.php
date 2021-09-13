@@ -2,16 +2,19 @@
 
 namespace App\Controller;
 
-use App\Form\DemandeValidationType;
 use Pusher\Pusher;
 use App\Service\FormService;
 use App\Service\StatutService;
+use App\Entity\AttestationSalaire;
 use App\Service\HistoriqueService;
+use App\Form\DemandeValidationType;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 
 class UserController extends AbstractController
@@ -28,12 +31,56 @@ class UserController extends AbstractController
     /**
      * @Route("/user/demande/{repo}", name="user_demande_document")
      */
-    public function demande_document($repo, FormService $service, Request $request): Response
+    public function demande_document($repo, FormService $service, Request $request, SluggerInterface $slugger): Response
     {
         $array = $service->getRepository($repo);
         $form = $this->createForm($array['type'], $array['document']);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($repo == 'Absence') {
+                $brochureFile = $form->get('brochure')->getData();
+
+
+                if ($brochureFile) {
+                    $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
+
+                    try {
+                        $brochureFile->move(
+                            $this->getParameter('brochures_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                    }
+
+
+                    //$document->setBrochureFilename($newFilename);
+                }
+            }
+
+            if ($repo == 'OrdreMission') {
+                $brochureFile = $form->get('brochure')->getData();
+
+                if ($brochureFile) {
+                    $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
+
+                    try {
+                        $brochureFile->move(
+                            $this->getParameter('brochures_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                    }
+
+
+                    // $document->setBrochureFilename($newFilename);
+                }
+            }
             $tab = [];
             if ($repo == 'OrdreMission') $tab = ['transport' => $request->get("transport"), 'matricule' => $request->get("matricule")];
             $this->addFlash('success', $service->registerForm($array['document'], $this->getUser(), $repo, $tab));
@@ -91,5 +138,14 @@ class UserController extends AbstractController
         return $this->render($service->getRepository($repo)['twig_validation'], [
             'document' => $service->getDocument($repo, $id),
         ]);
+    }
+    public function getType()
+    {
+        $type = AttestationSalaire::TYPE;
+        $output = [];
+        foreach ($type as $key => $value) {
+            $output[$key] = $value;
+        }
+        return $output;
     }
 }

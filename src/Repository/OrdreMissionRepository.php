@@ -31,7 +31,8 @@ class OrdreMissionRepository extends ServiceEntityRepository
             ->andWhere('p.statut <> :statut1')
             ->andWhere('p.statut <> :statut2')
             ->setParameter('statut1', 'reçu')
-            ->setParameter('statut2', 'Refusé par l\'administration');
+            ->setParameter('statut2', 'Refusé par l\'administration')
+            ->orderBy("p.created_at", "DESC");
 
         return $query->getQuery();
     }
@@ -53,33 +54,4 @@ class OrdreMissionRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-    // /**
-    //  * @return OrdreMission[] Returns an array of OrdreMission objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?OrdreMission
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

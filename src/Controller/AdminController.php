@@ -16,7 +16,9 @@ use App\Service\PersonnelService;
 use App\Entity\AttestationTravail;
 use App\Entity\DepartementService;
 use App\Entity\EnregistrementEntree;
+use App\Entity\PersonnelSearch;
 use App\Form\EnregistrementEntreeType;
+use App\Form\PersonnelSearchType;
 use App\Repository\PersonnelRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\OrdreMissionRepository;
@@ -24,7 +26,9 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
@@ -50,6 +54,12 @@ class AdminController extends AbstractController
         if (!$repo) {
             $search = new AbsenceSearch();
             $form = $this->createForm(AbsenceSearchType::class, $search);
+            $form->handleRequest($request);
+            $form = $form->createView();
+        }
+        if ($repo == 'Personnel') {
+            $search = new PersonnelSearch();
+            $form = $this->createForm(PersonnelSearchType::class, $search);
             $form->handleRequest($request);
             $form = $form->createView();
         }
@@ -80,7 +90,7 @@ class AdminController extends AbstractController
      * @Route("/admin/ajout-personnel", name="admin_add_personnel")
      * @Route("/admin/modifier/Personnel/{id}", name="admin_set_personnel")
      */
-    public function AddPersonnel(PersonnelService $service, Personnel $personnel = null, $id = null, Request $request, PersonnelRepository $repo, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder): Response
+    public function AddPersonnel(PersonnelService $service, Personnel $personnel = null, $id = null, Request $request, PersonnelRepository $repo, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $titre = 'Modification des données';
         if (!$id) {
@@ -91,7 +101,23 @@ class AdminController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $brochureFile */
+            $brochureFile = $form->get('photo')->getData();
 
+
+            if ($brochureFile) {
+                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
+
+                try {
+                    $brochureFile->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                }
+            }
             $entityManager->persist($personnel);
 
             $entityManager->flush();
@@ -109,7 +135,6 @@ class AdminController extends AbstractController
         ]);
     }
 
-
     /**
      *  @Route("/admin/supprimer/Personnel/{id}", name="admin_delete_personnel")
      */
@@ -123,7 +148,7 @@ class AdminController extends AbstractController
      * @Route("/admin/ajout-departement-service", name="admin_add_departement")
      * @Route("/admin/modifier/departement/{id}", name="admin_set_departement")
      */
-    public function addDepartement($id, Request $request, DepartementService $departement = null, EntityManagerInterface $entityManager): Response
+    public function addDepartement($id = null, Request $request, DepartementService $departement = null, EntityManagerInterface $entityManager): Response
     {
         if (!$id) {
             $departement = new DepartementService();

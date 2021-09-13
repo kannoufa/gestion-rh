@@ -5,13 +5,14 @@
 {% block titre %}Demandes d'absence{% endblock %}
 
 {% block col_head %}
-    <th><i class="fa fa-info-circle" aria-hidden="true"></i> Cause</th>
     <th><i class="fa fa-bell-o" aria-hidden="true"></i> Statut</th>
+    <th><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Motif</th>
 {% endblock %}
 
-{% block col_body %}
-    <td><span class="btn btn-sm rounded-pill btn-primary">{{ document.cause}}</span></td>              
-    <td><span class="btn btn-sm rounded-pill btn-danger">{{ document.statut}}</span></td>              
+{% block col_body %}            
+    <td><span class="btn btn-sm rounded-pill btn-danger">{{ document.statut}}</span></td>  
+    <td><a href="{{ asset('uploads/brochures/' ~ document.brochureFilename) }}">Voir (PDF)</a></td>              
+            
 {% endblock %}
  
 {% block buttons %}

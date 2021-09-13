@@ -46,10 +46,10 @@
         <i class="fa fa-print" aria-hidden="true"></i> Imprimer
       </button>
       <a href="{{ path('user_change_statut', {repo: 'Absence', id: document.id, etat: 'Validé par le département'}) }}" class="btn btn-success">
-            <i class="fa fa-print" aria-hidden="true"></i> Validé
+            <i class="fa fa-check" aria-hidden="true"></i> Validé
         </a>
         <a href="{{ path('user_change_statut', {repo: 'Absence', id: document.id, etat: 'Refusé par le département'}) }}" class="btn btn-danger">
-            <i class="fa fa-print" aria-hidden="true"></i> Refusé 
+            <i class="fa fa-times" aria-hidden="true"></i> Refusé 
         </a>
     <center>
 {% endblock %}

@@ -22,46 +22,17 @@ class FicheRenseignementRepository extends ServiceEntityRepository
     }
 
     /**
-    * @return Query[]
-    */
-    public function findAllVisibleQuery() : Query
+     * @return Query[]
+     */
+    public function findAllVisibleQuery(): Query
     {
         return $this->findVisibleQuery()
-            ->getQuery()
-        ;
+            ->orderBy("p.created_at", "DESC")
+            ->getQuery();
     }
 
-    private function findVisibleQuery() : QueryBuilder
+    private function findVisibleQuery(): QueryBuilder
     {
         return $this->createQueryBuilder('p');
     }
-
-    // /**
-    //  * @return FicheRenseignement[] Returns an array of FicheRenseignement objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?FicheRenseignement
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

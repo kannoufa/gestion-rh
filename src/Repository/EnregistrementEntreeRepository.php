@@ -22,46 +22,17 @@ class EnregistrementEntreeRepository extends ServiceEntityRepository
     }
 
     /**
-    * @return Query[]
-    */
-    public function findAllVisibleQuery() : Query
+     * @return Query[]
+     */
+    public function findAllVisibleQuery(): Query
     {
         return $this->findVisibleQuery()
-            ->getQuery()
-        ;
+            ->orderBy("p.created_at", "DESC")
+            ->getQuery();
     }
 
-    private function findVisibleQuery() : QueryBuilder
+    private function findVisibleQuery(): QueryBuilder
     {
         return $this->createQueryBuilder('p');
     }
-
-    // /**
-    //  * @return EnregistrementEntree[] Returns an array of EnregistrementEntree objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?EnregitremEnregistrementEntreeentEntree
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

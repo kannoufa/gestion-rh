@@ -2,17 +2,19 @@
 
 namespace App\Form;
 
-use App\Entity\Absence;
 use App\Entity\User;
+use App\Entity\Absence;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AbsenceType extends AbstractType
 {
@@ -38,7 +40,22 @@ class AbsenceType extends AbstractType
                     'placeholder' => 'jj/mm/aaaa ابتداءا من',
                     'class' => 'form-control text-right'
                 ],
-            ])->add('Envoyer', SubmitType::class);
+            ])->add('brochure', FileType::class, [
+                'label' => 'Motif (.PDF )',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'application/pdf',
+                            'application/x-pdf',
+                        ],
+                        'mimeTypesMessage' => 'Veuillez respecter le format(.pdf)',
+                    ])
+                ],
+            ])
+            ->add('Envoyer', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

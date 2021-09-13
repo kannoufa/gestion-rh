@@ -8,22 +8,14 @@
          <center><img src="{{asset('assets/images/logo.png')}}" style="align: right; " width="370px"></center>
         <hr>
         <h1>Messagerie</h1> 
-            <h4> {{ message.title }}</h4>
-            <small>Envoyé par {{ message.sender }} à {{message.createdAt | date}}</small>
-
-            
-            <hr>
-            <h6> {{ message.message | raw }}</h6></div>
-           
-                                 
-<br>
-								 
-                                  
-
-                      </div>
-                  </aside>
-              </div>
-</div>
+        <div class="card mb-3">
+            <div class="card-header"><h4>{{ message.title }}</h4>
+            <small class="card-subtitle text-muted">Envoyé par {{ message.sender }} à {{message.createdAt | date}}</small>
+            </div>
+            <div class="card-body">
+                <h6 class="card-text">{{ message.message | raw }}</h6>
+            </div>
+        </div>
 
 
 {% endblock %}

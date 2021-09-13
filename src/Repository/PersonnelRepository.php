@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use Doctrine\ORM\Query;
 use App\Entity\Personnel;
+use App\Entity\PersonnelSearch;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -24,10 +25,42 @@ class PersonnelRepository extends ServiceEntityRepository
     /**
      * @return Query[]
      */
-    public function findAllVisibleQuery(): Query
+    public function findAllVisibleQuery(PersonnelSearch $search): Query
     {
-        return $this->findVisibleQuery()
-            ->getQuery();
+        $query = $this->findVisibleQuery();
+
+        if ($search->getPpr()) {
+            $query = $query
+                ->andWhere('p.ppr = :ppr')
+                ->setParameter('ppr', $search->getPpr())
+                ->orderBy("p.nom", "ASC");
+        }
+
+        if ($search->getNom()) {
+            $query = $query
+                ->andWhere('p.nom = :val')
+                ->setParameter('val', $search->getNom());
+        }
+
+        if ($search->getPrenom()) {
+            $query = $query
+                ->andWhere('p.prenom = :val')
+                ->setParameter('val', $search->getPrenom());
+        }
+
+        if ($search->getFonction()) {
+            $query = $query
+                ->andWhere('p.fonction = :val')
+                ->setParameter('val', $search->getFonction());
+        }
+
+        if ($search->getGrade()) {
+            $query = $query
+                ->andWhere('p.grade_ar = :val')
+                ->setParameter('val', $search->getGrade());
+        }
+
+        return $query->getQuery();
     }
 
     private function findVisibleQuery(): QueryBuilder
@@ -47,33 +80,4 @@ class PersonnelRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-    // /**
-    //  * @return Personnel[] Returns an array of Personnel objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Personnel
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

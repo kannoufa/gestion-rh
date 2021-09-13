@@ -2,15 +2,20 @@
 
 namespace App\Form;
 
+use App\Entity\DepartementService;
 use App\Entity\Personnel;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 
 class PersonnelType extends AbstractType
@@ -185,6 +190,26 @@ class PersonnelType extends AbstractType
                 'attr' => [
                     'placeholder' => 'email ...',
                     'class' => 'form-control'
+                ],
+            ])->add('departementService', EntityType::class, [
+                "class" => DepartementService::class,
+                "choice_label" => "nomFr",
+                "attr" => [
+                    "class" => "form-control"
+                ]
+            ])->add('photo', FileType::class, [
+                'label' => 'Photo (.PDF )',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'application/pdf',
+                            'application/x-pdf',
+                        ],
+                        'mimeTypesMessage' => 'Veuillez respecter le format(.pdf)',
+                    ])
                 ],
             ])
             ->add('Enregistrer', SubmitType::class);

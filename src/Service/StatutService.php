@@ -2,19 +2,21 @@
 
 namespace App\Service;
 
+use DateTime;
+use App\Entity\Message;
 use App\Entity\Historique;
 use App\Repository\AbsenceRepository;
+use App\Repository\PersonnelRepository;
 use App\Repository\HistoriqueRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\OrdreMissionRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\AttestationSalaireRepository;
 use App\Repository\AttestationTravailRepository;
+use App\Repository\DepartementServiceRepository;
 use App\Repository\FicheRenseignementRepository;
 use App\Repository\EnregistrementEntreeRepository;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use App\Repository\PersonnelRepository;
-use DateTime;
 
 class StatutService
 {
@@ -30,9 +32,11 @@ class StatutService
     protected $paginator;
     protected $entityManager;
     protected $router;
+    protected $departementRepository;
 
 
-    public function __construct(UrlGeneratorInterface $router, EntityManagerInterface $entityManager, PersonnelRepository $personnelRepository, AttestationTravailRepository $attestationTravailRepository, OrdreMissionRepository $ordreMissionRepository, AttestationSalaireRepository $attestationSalaireRepository, AbsenceRepository $absenceRepository, PaginatorInterface $paginator, FicheRenseignementRepository $ficheRenseignementRepository, HistoriqueRepository $historiqueRepository, EnregistrementEntreeRepository $enregistrementEtreeRepository)
+
+    public function __construct(DepartementServiceRepository $departementRepository, UrlGeneratorInterface $router, EntityManagerInterface $entityManager, PersonnelRepository $personnelRepository, AttestationTravailRepository $attestationTravailRepository, OrdreMissionRepository $ordreMissionRepository, AttestationSalaireRepository $attestationSalaireRepository, AbsenceRepository $absenceRepository, PaginatorInterface $paginator, FicheRenseignementRepository $ficheRenseignementRepository, HistoriqueRepository $historiqueRepository, EnregistrementEntreeRepository $enregistrementEtreeRepository)
     {
         $this->enregistrementEtreeRepository = $enregistrementEtreeRepository;
         $this->attestationTravailRepository = $attestationTravailRepository;
@@ -45,6 +49,7 @@ class StatutService
         $this->entityManager = $entityManager;
         $this->paginator = $paginator;
         $this->router = $router;
+        $this->departementRepository = $departementRepository;
     }
 
     public function getRepository($repo)
@@ -87,6 +92,11 @@ class StatutService
             $twig_document = 'admin/historique.html.twig';
             $twig_liste_document = 'admin/historique.html.twig';
         }
+        if ($repo == 'Departement') {
+            $repository = $this->departementRepository;
+            $twig_document = '';
+            $twig_liste_document = 'admin/liste_departement.html.twig';
+        }
         if ($repo == 'Personnel') {
             $repository = $this->personnelRepository;
             $twig_document = 'admin/profil.html.twig';
@@ -110,6 +120,7 @@ class StatutService
                 if ($statut == 'Nouveau demande' || $statut == 'Validé par le département')
                     $statut = 'en cours de traitement';
             }
+
             if ($etat == 'Disponible') {
                 $statut = 'Disponible';
             }
@@ -168,11 +179,18 @@ class StatutService
 
     public function getListeDocuments($repo, $request, $search)
     {
-        if ($repo != null) {
+        if ($repo != null && $repo != 'Personnel') {
             $documents = $this->paginator->paginate(
                 $this->getRepository($repo)['repository']->findAllVisibleQuery(),
                 $request->query->getInt('page', 1),
-                5
+                8
+            );
+            $twig = $this->getRepository($repo)['twig_liste_document'];
+        } elseif ($repo == 'Personnel') {
+            $documents = $this->paginator->paginate(
+                $this->personnelRepository->findAllVisibleQuery($search),
+                $request->query->getInt('page', 1),
+                8
             );
             $twig = $this->getRepository($repo)['twig_liste_document'];
         } else {
