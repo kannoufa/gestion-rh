@@ -3,30 +3,23 @@
 namespace App\Entity;
 
 use App\Repository\AbsenceRepository;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Entity\Personnel;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * @ORM\Entity(repositoryClass=AbsenceRepository::class)
+ * @Vich\Uploadable()
  */
 class Absence
 {
-    const FILIERE = [
-        0 => 'الرياضيات',
-        1 => 'الفيزياء التطبيقية',
-        2 => 'البيولوجيا',
-        3 => 'الاعلاميات',
-        4 => 'علوم الأرض',
-        5 => 'الهندسة المدنية',
-        6 => 'تقنية التواصل',
-        7 => 'العلوم الكيميائية',
-        8 => 'مصلحة الموارد البشرية',
-    ];
-
     const CAUSE = [
         0 => 'مرض',
         1 => 'رخصة إستثنائية',
     ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -70,9 +63,14 @@ class Absence
     private $duree;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="datetime")
      */
     private $apartir;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $jusquA;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -90,21 +88,16 @@ class Absence
     private $statut;
 
     /**
-     * @ORM\Column(type="string",nullable=true)
+     * @var string|null
+     * @ORM\Column(type="string", length=255)
      */
-    private $brochureFilename;
+    private $filename;
 
-    public function getBrochureFilename()
-    {
-        return $this->brochureFilename;
-    }
-
-    public function setBrochureFilename($brochureFilename)
-    {
-        $this->brochureFilename = $brochureFilename;
-
-        return $this;
-    }
+    /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="motif_pdf", fileNameProperty="filename")
+     */
+    private $motifFile;
 
     public function __construct()
     {
@@ -188,26 +181,38 @@ class Absence
         return $this;
     }
 
-    public function getDuree(): ?string
+    public function getDuree(): ?int
     {
         return $this->duree;
     }
 
-    public function setDuree(string $duree): self
+    public function setDuree(int $duree): self
     {
         $this->duree = $duree;
 
         return $this;
     }
 
-    public function getApartir(): ?string
+    public function getApartir(): ?\DateTime
     {
         return $this->apartir;
     }
 
-    public function setApartir(string $apartir): self
+    public function setApartir(\DateTime $apartir): self
     {
         $this->apartir = $apartir;
+
+        return $this;
+    }
+
+    public function getJusquA(): ?\DateTime
+    {
+        return $this->jusquA;
+    }
+
+    public function setJusquA(\DateTime $jusquA): self
+    {
+        $this->jusquA = $jusquA;
 
         return $this;
     }
@@ -248,13 +253,46 @@ class Absence
         return $this;
     }
 
-    public function getFiliereType(): string
-    {
-        return self::FILIERE[$this->filiere];
-    }
-
     public function getCauseType(): string
     {
         return self::CAUSE[$this->cause];
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param null|string $filename
+     * @return Absence
+     */
+    public function setFilename(?string $filename): self
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
+     * @return null|File
+     */
+    public function getMotifFile(): ?File
+    {
+        return $this->motifFile;
+    }
+
+    /**
+     * @param null|File $motifFile
+     * @return Absence
+     */
+    public function setMotifFile(?File $motifFile): self
+    {
+        $this->motifFile = $motifFile;
+
+        return $this;
     }
 }

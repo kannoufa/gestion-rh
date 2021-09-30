@@ -3,11 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\OrdreMissionRepository;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Entity\Personnel;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=OrdreMissionRepository::class)
+ * @Vich\Uploadable()
  */
 class OrdreMission
 {
@@ -99,21 +102,16 @@ class OrdreMission
     private $statut;
 
     /**
-     * @ORM\Column(type="string",nullable=true)
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $brochureFilename;
+    private $filename;
 
-    public function getBrochureFilename()
-    {
-        return $this->brochureFilename;
-    }
-
-    public function setBrochureFilename($brochureFilename)
-    {
-        $this->brochureFilename = $brochureFilename;
-
-        return $this;
-    }
+    /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="motif_pdf", fileNameProperty="filename")
+     */
+    private $motifFile;
 
     public function __construct()
     {
@@ -302,6 +300,44 @@ class OrdreMission
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param null|string $filename
+     * @return OrdreMission
+     */
+    public function setFilename(?string $filename): self
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
+     * @return null|File
+     */
+    public function getMotifFile(): ?File
+    {
+        return $this->motifFile;
+    }
+
+    /**
+     * @param null|File $motifFile
+     * @return OrdreMission
+     */
+    public function setMotifFile(?File $motifFile): self
+    {
+        $this->motifFile = $motifFile;
 
         return $this;
     }

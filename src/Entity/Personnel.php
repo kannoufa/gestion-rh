@@ -6,8 +6,10 @@ use App\Entity\Absence;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PersonnelRepository;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -16,6 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     fields={"ppr"},
  *     message="Ce numéro P.P.R existe déjà"
  * )
+ * @Vich\Uploadable()
  */
 class Personnel
 {
@@ -24,11 +27,23 @@ class Personnel
         1 => 'ذكر',
     ];
 
+    const SEXE = [
+        0 => 'féminin',
+        1 => 'masculin',
+    ];
+
     const SITUATIONFAMILIAIREAR = [
-        0 => 'أعزب',
-        1 => 'متزوج',
-        2 => 'مطلق',
-        3 => 'أرمل',
+        0 => 'اعزب/عزباء',
+        1 => '(ة)متزوج',
+        2 => '(ة)مطلق',
+        3 => '(ة)أرمل',
+    ];
+
+    const ETATCIVIL = [
+        0 => 'Célibataire',
+        1 => 'Marié(e)',
+        2 => 'Divorcé(e)',
+        3 => 'Veuf/Veuve',
     ];
 
 
@@ -58,16 +73,6 @@ class Personnel
      * @ORM\OneToMany(targetEntity=AttestationTravail::class, mappedBy="personnel")
      */
     private $attestations_travail;
-
-    /**
-     * @ORM\OneToOne(targetEntity=EnregistrementEntree::class, mappedBy="personnel")
-     */
-    private $entree;
-
-    /**
-     * @ORM\OneToOne(targetEntity=FicheRenseignement::class, mappedBy="personnel")
-     */
-    private $fiche;
 
     /**
      * @ORM\OneToMany(targetEntity=OrdreMission::class, mappedBy="personnel")
@@ -128,7 +133,17 @@ class Personnel
     /**
      * @ORM\Column(type="string", length=50)
      */
+    private $sexe;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
     private $nationalite_ar;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $nationalite;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -147,7 +162,7 @@ class Personnel
     private $departementService;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="integer")
      */
     private $anciennete_echelon;
 
@@ -162,7 +177,7 @@ class Personnel
     private $date_effet_grade;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="integer")
      */
     private $anciennete_grade;
 
@@ -182,7 +197,7 @@ class Personnel
     private $date_fonction;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="integer")
      */
     private $anciennete_administrative;
 
@@ -213,21 +228,86 @@ class Personnel
     private $email;
 
     /**
-     * @ORM\Column(type="string",nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
-    private $brochureFilename;
+    private $lieunaiss;
 
-    public function getBrochureFilename()
-    {
-        return $this->brochureFilename;
-    }
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $etatcivil;
 
-    public function setBrochureFilename($brochureFilename)
-    {
-        $this->brochureFilename = $brochureFilename;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $situationconj;
 
-        return $this;
-    }
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $doticonj;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nbrenfant;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $grade;
+
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $echelle;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $indice;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $diplome;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $adpersonnel;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $advacance;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $telephonne;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $filename;
+
+    /**
+     * @var File|null
+     * @Assert\Image(
+     *      mimeTypes="image/jpeg")
+     * @Vich\UploadableField(mapping="personnel_image", fileNameProperty="filename")
+     */
+    private $imageFile;
+
+
 
     public function __construct()
     {
@@ -235,6 +315,7 @@ class Personnel
         $this->attestations_salaire = new ArrayCollection();
         $this->attestations_travail = new ArrayCollection();
         $this->ordres = new ArrayCollection();
+        $this->created_at = new \DateTime();
     }
 
     public function getId(): ?int
@@ -398,12 +479,12 @@ class Personnel
         return $this;
     }
 
-    public function getAncienneteEchelon(): ?string
+    public function getAncienneteEchelon(): ?int
     {
         return $this->anciennete_echelon;
     }
 
-    public function setAncienneteEchelon(?string $anciennete_echelon): self
+    public function setAncienneteEchelon(?int $anciennete_echelon): self
     {
         $this->anciennete_echelon = $anciennete_echelon;
 
@@ -434,12 +515,12 @@ class Personnel
         return $this;
     }
 
-    public function getAncienneteGrade(): ?string
+    public function getAncienneteGrade(): ?int
     {
         return $this->anciennete_grade;
     }
 
-    public function setAncienneteGrade(?string $anciennete_grade): self
+    public function setAncienneteGrade(?int $anciennete_grade): self
     {
         $this->anciennete_grade = $anciennete_grade;
 
@@ -482,12 +563,12 @@ class Personnel
         return $this;
     }
 
-    public function getAncienneteAdministrative(): ?string
+    public function getAncienneteAdministrative(): ?int
     {
         return $this->anciennete_administrative;
     }
 
-    public function setAncienneteAdministrative(?string $anciennete_administrative): self
+    public function setAncienneteAdministrative(?int $anciennete_administrative): self
     {
         $this->anciennete_administrative = $anciennete_administrative;
 
@@ -554,6 +635,186 @@ class Personnel
         return $this;
     }
 
+    public function getSexe(): ?string
+    {
+        return $this->sexe;
+    }
+
+    public function setSexe(string $sexe): self
+    {
+        $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    public function getLieunaiss(): ?string
+    {
+        return $this->lieunaiss;
+    }
+
+    public function setLieunaiss(string $lieunaiss): self
+    {
+        $this->lieunaiss = $lieunaiss;
+
+        return $this;
+    }
+
+    public function getNationalite(): ?string
+    {
+        return $this->nationalite;
+    }
+
+    public function setNationalite(string $nationalite): self
+    {
+        $this->nationalite = $nationalite;
+
+        return $this;
+    }
+
+    public function getEtatcivil(): ?string
+    {
+        return $this->etatcivil;
+    }
+
+    public function setEtatcivil(string $etatcivil): self
+    {
+        $this->etatcivil = $etatcivil;
+
+        return $this;
+    }
+
+    public function getSituationconj(): ?string
+    {
+        return $this->situationconj;
+    }
+
+    public function setSituationconj(?string $situationconj): self
+    {
+        $this->situationconj = $situationconj;
+
+        return $this;
+    }
+
+    public function getDoticonj(): ?string
+    {
+        return $this->doticonj;
+    }
+
+    public function setDoticonj(?string $doticonj): self
+    {
+        $this->doticonj = $doticonj;
+
+        return $this;
+    }
+
+    public function getNbrenfant(): ?string
+    {
+        return $this->nbrenfant;
+    }
+
+    public function setNbrenfant(?string $nbrenfant): self
+    {
+        $this->nbrenfant = $nbrenfant;
+
+        return $this;
+    }
+
+    public function getGrade(): ?string
+    {
+        return $this->grade;
+    }
+
+    public function setGrade(string $grade): self
+    {
+        $this->grade = $grade;
+
+        return $this;
+    }
+
+    public function getEchelle(): ?string
+    {
+        return $this->echelle;
+    }
+
+    public function setEchelle(string $echelle): self
+    {
+        $this->echelle = $echelle;
+
+        return $this;
+    }
+
+    public function getIndice(): ?string
+    {
+        return $this->indice;
+    }
+
+    public function setIndice(string $indice): self
+    {
+        $this->indice = $indice;
+
+        return $this;
+    }
+
+    public function getDiplome(): ?string
+    {
+        return $this->diplome;
+    }
+
+    public function setDiplome(string $diplome): self
+    {
+        $this->diplome = $diplome;
+
+        return $this;
+    }
+
+    public function getAdpersonnel(): ?string
+    {
+        return $this->adpersonnel;
+    }
+
+    public function setAdpersonnel(string $adpersonnel): self
+    {
+        $this->adpersonnel = $adpersonnel;
+
+        return $this;
+    }
+
+    public function getAdvacance(): ?string
+    {
+        return $this->advacance;
+    }
+
+    public function setAdvacance(string $advacance): self
+    {
+        $this->advacance = $advacance;
+
+        return $this;
+    }
+
+    public function getTelephonne(): ?string
+    {
+        return $this->telephonne;
+    }
+
+    public function setTelephonne(string $telephonne): self
+    {
+        $this->telephonne = $telephonne;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTime
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTime $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Absence[]
      */
@@ -586,12 +847,12 @@ class Personnel
     /**
      * @return Collection|AttestationSalaire[]
      */
-    public function getAttestationsSalaire(): Collection
+    public function getAttestations_salaire(): Collection
     {
         return $this->attestations_salaire;
     }
 
-    public function addAttestationsSalaire(AttestationSalaire $attestation_salaire): self
+    public function addAttestations_salaire(AttestationSalaire $attestation_salaire): self
     {
         if (!$this->attestations_salaire->contains($attestation_salaire)) {
             $this->attestations_salaire[] = $attestation_salaire;
@@ -601,7 +862,7 @@ class Personnel
         return $this;
     }
 
-    public function removeAttestationsSalaire(AttestationSalaire $attestation_salaire): self
+    public function removeAttestations_salaire(AttestationSalaire $attestation_salaire): self
     {
         if ($this->attestations_salaire->removeElement($attestation_salaire)) {
             if ($attestation_salaire->getPersonnel() === $this) {
@@ -615,12 +876,12 @@ class Personnel
     /**
      * @return Collection|AttestationTravail[]
      */
-    public function getAttestationsTravail(): Collection
+    public function getAttestations_travail(): Collection
     {
         return $this->attestations_travail;
     }
 
-    public function addAttestationsTravail(AttestationTravail $attestation_travail): self
+    public function addAttestations_travail(AttestationTravail $attestation_travail): self
     {
         if (!$this->attestations_travail->contains($attestation_travail)) {
             $this->attestations_travail[] = $attestation_travail;
@@ -630,7 +891,7 @@ class Personnel
         return $this;
     }
 
-    public function removeAttestationsTravail(AttestationTravail $attestation_travail): self
+    public function removeAttestations_travail(AttestationTravail $attestation_travail): self
     {
         if ($this->attestations_travail->removeElement($attestation_travail)) {
             if ($attestation_travail->getPersonnel() === $this) {
@@ -680,5 +941,63 @@ class Personnel
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param null|string $filename
+     * @return Personnel
+     */
+    public function setFilename(?string $filename): self
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
+     * @return null|File
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param null|File $imageFile
+     * @return Personnel
+     */
+    public function setImageFile(?File $imageFile): self
+    {
+        $this->imageFile = $imageFile;
+
+        return $this;
+    }
+
+    public function getSexeType(): string
+    {
+        return self::SEXE[$this->sexe];
+    }
+
+    public function getSexeArType(): string
+    {
+        return self::SEXEAR[$this->sexe_ar];
+    }
+
+    public function getEtatCivilType(): string
+    {
+        return self::ETATCIVIL[$this->etatcivil];
+    }
+
+    public function getSituationFamilaireArType(): string
+    {
+        return self::SITUATIONFAMILIAIREAR[$this->situation_familiale_ar];
     }
 }

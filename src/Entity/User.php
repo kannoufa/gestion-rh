@@ -45,21 +45,15 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(
-     *      min = 7,
-     *      max = 50,
-     *      minMessage = "le nom d'utilisateur ne doit pas être inférieur à 7 caractères",
-     *      maxMessage = "le nom d'utilisateur ne doit pas être supérieur à 50 caractères"
+     * @Assert\Regex(
+     *     pattern="/^[0-9]{7}$/",
+     *     message="le P.P.R doit contenir 7 chiffres"
      * )
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Regex(
-     *     pattern="/^[0-9]{7}$/",
-     *     message="le P.P.R doit contenir 7 chiffres"
-     * )
      */
     private $password;
 
@@ -124,7 +118,7 @@ class User implements UserInterface, \Serializable
     public function getRoles(): ?array
     {
         $roles = $this->roles;
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_ADMIN';
         return array_unique($roles);
     }
 

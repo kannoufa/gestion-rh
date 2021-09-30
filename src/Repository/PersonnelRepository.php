@@ -3,9 +3,9 @@
 namespace App\Repository;
 
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use App\Entity\Personnel;
 use App\Entity\PersonnelSearch;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -27,13 +27,12 @@ class PersonnelRepository extends ServiceEntityRepository
      */
     public function findAllVisibleQuery(PersonnelSearch $search): Query
     {
-        $query = $this->findVisibleQuery();
+        $query = $this->findVisibleQuery()->orderBy("p.nom", "ASC");
 
         if ($search->getPpr()) {
             $query = $query
                 ->andWhere('p.ppr = :ppr')
-                ->setParameter('ppr', $search->getPpr())
-                ->orderBy("p.nom", "ASC");
+                ->setParameter('ppr', $search->getPpr());
         }
 
         if ($search->getNom()) {

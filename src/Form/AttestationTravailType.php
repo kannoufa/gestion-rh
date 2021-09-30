@@ -13,10 +13,9 @@ class AttestationTravailType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(
-                'Envoyer',
-                SubmitType::class,
-            );
+            ->add('submit', SubmitType::class, [
+                'label' => 'Demander une attestation de travail',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

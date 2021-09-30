@@ -1,0 +1,48 @@
+{% extends 'admin/slide.html.twig' %}
+ 
+{% block title %}Départements et services{% endblock %}
+
+{% block body %}
+<div class="container">
+    <center><img src="{{asset('assets/images/logo.png')}}" style="align: right; " width="370px"></center>
+    <hr>
+    <h1>Départements et services</h1>
+    <a href="{{ path('admin_parametre', {repo: 'Departement'}) }}" class="btn-success btn-sm">
+        <i class="fa fa-plus" aria-hidden="true"></i> Ajouter un département/service
+    </a>
+    <table class="table table-striped text-center">
+        <thead>
+            <tr>
+                <th><i class="fa fa-window-maximize" aria-hidden="true"></i> Nom Fr</th>
+                <th><i class="fa fa-window-maximize" aria-hidden="true"></i> Nom Ar</th>
+                <th><i class="fa fa-user-secret" aria-hidden="true"></i> Chef</th>
+                <th><i class="fa fa-cogs" aria-hidden="true"></i> Actions</th>
+            </tr>
+        </thead>
+        {% if documents|length > 0 %}
+            <tbody>
+                {% for document in documents %}
+                    <tr>
+                        <td>{{ document.nomFr }}</td>
+                        <td>{{ document.nomAr }}</td>
+                        <td>{{ document.chef.personnel.nom }} {{ document.chef.personnel.prenom }}</td>
+                        <td>
+                            <a href="{{ path('admin_set_departement', {repo : 'Departement', id:document.id}) }}" class="btn-info btn">
+                                <i class="fa fa-pencil" aria-hidden="true"></i> Modifier
+                            </a>
+                            <a href="{{ path('admin_delete', {repo:'Departement', id:document.id}) }}" class="btn-danger btn">
+                                <i class="fa fa-trash" aria-hidden="true"></i> Supprimer
+                            </a>
+                        </td>
+                    </tr>      
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <center><p class="badge rounded-pill bg-danger">Aucun résultat trouvé</p></center>
+        {% endif %}
+        <div class="pagination">
+            {{knp_pagination_render(documents) }}
+        </div><br>
+</div>
+{% endblock %}

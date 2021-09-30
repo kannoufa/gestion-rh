@@ -1,0 +1,49 @@
+{% extends 'admin/slide.html.twig' %}
+
+{% block title %}طلب رخصة أو إذن بالتغيب{% endblock %}
+ 
+{% block body %}
+<div class="container">    
+    <div dir="rtl" lang="ar" id="sectionAimprimer">
+        {% for i in 0..2 %}
+            <div style="text-align: right; line-height: 0.5; padding:30px 40px 0 40px;font-family:times; font-size: 19px">
+                <p>جامعة القاضي عياض</p>
+                <p>&nbsp;كلية العلوم والتقنيات</p>
+                <p>&nbsp;مراکش
+                    <center><u><b>(*)طلب رخصة أو إذن بالتغيب</b></u></center>
+                </p><br>
+                <p>  
+                    الإسـم الكـامـل &nbsp; &nbsp; &nbsp; : &nbsp; {{ document.nomar }} {{ document.prenomar }} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    الإطار &nbsp; &nbsp; : &nbsp; &nbsp; {{ document.grade }}
+                </p>
+                <p><br> المصلحة أو الشعبة : &nbsp;  {{ document.filiere }}</p>
+                <p> سبب الغيـاب &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; {{ document.cause }}</p>
+                <p> مـدة الغيــاب &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; {{ document.duree }} &nbsp; يوم &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    ابتداء من &nbsp; &nbsp; : &nbsp; &nbsp; {{ document.apartir | date('d/m/Y') }}
+                </p>                    
+                <p> مراكـش فـي &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp;  {{ document.createdAt | date('d/m/Y') }}   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    توقيع الموظف
+                </p>
+                <p>&nbsp;قرار السيد رئيس الشعبة أو المصلحة : 
+                    بالموافقة
+                </p>
+                <p><br></p>
+                <strong>
+                    <p style="text-align: left">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;خـاتـم المؤسسة </p>
+                    <p>&nbsp;- (*)يسحب الطلب من مقر العمل ويعاد إليه بعد تعبئته .</p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                    <p>- لا تعتبر الرخصة سارية المفعول إلا بعد تلقي الموافقة الفعلية عليها.</p>
+                </strong>
+                <br><hr>
+            </div>
+        {% endfor %}                
+    </div>
+</div>
+    <center>
+        <button class="button" onClick="imprimer('sectionAimprimer')">
+            <i class="fa fa-print" aria-hidden="true"></i> Imprimer
+        </button>
+    <center><br>    
+{% endblock %}
+
+
+  

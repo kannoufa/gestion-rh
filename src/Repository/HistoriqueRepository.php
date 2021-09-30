@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use Doctrine\ORM\Query;
 use App\Entity\Historique;
+use App\Entity\HistoriqueSearch;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -24,10 +25,22 @@ class HistoriqueRepository extends ServiceEntityRepository
     /**
      * @return Query[]
      */
-    public function findAllVisibleQuery(): Query
+    public function findAllVisibleQuery(HistoriqueSearch $search): Query
     {
         $query = $this->findVisibleQuery()
             ->orderBy("p.dateRecu", "DESC");
+
+        if ($search->getPpr()) {
+            $query = $query
+                ->andWhere('p.ppr = :ppr')
+                ->setParameter('ppr', $search->getPpr());
+        }
+
+        if ($search->getTypeDemande()) {
+            $query = $query
+                ->andWhere('p.typeDemande = :val')
+                ->setParameter('val', $search->getTypeDemande());
+        }
 
         return $query->getQuery();
     }

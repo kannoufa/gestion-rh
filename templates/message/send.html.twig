@@ -4,6 +4,7 @@
 {% block title %}Nouveau Message{% endblock %}
  
 {% block body %}
+<div class="container">
   <div class="row"> 
       <div class="col-md-3">
         <div class="logo_background">
@@ -12,8 +13,7 @@
       </div>
       <div class="col-md-1"></div>
       <div class="col-md-7 form">
-        <h1>Messagerie<h1>
-        <h5>Nouveau Message</h5>
+        <h1>Messagerie (Nouveau Message)</h1>
         {% for message in app.flashes('success') %}
             <div class="alert alert-success text-center">
                 {{ message }}
@@ -25,7 +25,7 @@
                     {{ form_widget(form) }}
                 </li>
             </ul>
-            {{ form_end(form) }}
+        {{ form_end(form) }}
       </div>
     </div>
 </div>

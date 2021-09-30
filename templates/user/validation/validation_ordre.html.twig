@@ -1,0 +1,47 @@
+{% extends 'user/slide.html.twig' %}
+
+{% block title %}Ordre de mission{% endblock %}
+ 
+{% block body %}
+<div class="container">
+    <div style="line-height: 0.5; padding:30px 40px 0 40px;font-family:times; font-size: 19px">
+        <center><img src="{{asset('assets/images/logo.png')}}" style="align: right; " width=270px></center><hr>       
+            <p style="text-align: right;"><br><strong>Marrakech, Le {{ "now" | date('d/m/Y') }}</strong></p>
+            <i><p style="text-align: center;"><br><strong>Monsieur le Doyen</strong></p></i><br>
+            
+            <p><strong>Objet:</strong>Demande d'un ordre de mission</p>
+            <br><br><br>
+            <p>Monsieur le Doyen,</p>
+            <p>J'ai l'honneur de vous demander de bien vouloir maccorder un ordre de mission</p>
+            <p>Destination : {{document.destination}}</p>
+            <p>Objet de la mission : {{document.objet}}</p>
+            <p>Moyen de transport (Matricule): {{document.Transport}}</p>
+            <p>Chauffeur : {{document.chauffeur}}</p>
+            <p>Personnel de la mission : {{document.membres}}</p>
+            <p>Date de départ : {{document.DateDepart|date('d-m-Y ')}}       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;           Heure de départ : {{document.HeureDep}}</p>
+            <p>Date de retour : {{document.DateRetour|date('d-m-Y ')}}        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;          Heure de retour : {{document.HeureRetour}}</p>
+            
+            <p>Veuillez croire, Monsieur, le Doyen,en ma haute considération.</p>
+            <p>Nom et signature de l'intéressé(e)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Département/Service</p> 
+            <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; {{document.nom}} {{document.prenom}}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                {% if document.statut == 'En attante de validation par le département' %}
+                    <a href="{{ path('user_change_statut', {repo: 'OrdreMission', id: document.id, etat: 'Validé par le département'}) }}" class="btn btn-success">
+                            <i class="fa fa-check" aria-hidden="true"></i> Validé
+                        </a>
+                        <a href="{{ path('user_change_statut', {repo: 'OrdreMission', id: document.id, etat: 'Refusé par le département'}) }}" class="btn btn-danger">
+                            <i class="fa fa-times" aria-hidden="true"></i> Refusé 
+                        </a>
+                {% else %}
+                        &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+                        <div class="alert alert-light">La demande est déja envoyé. Vous ne pouvez pas modifier votre décision!</div>                    
+                {% endif %}
+            </p>
+            <center>
+                <hr><small>شارع عبد الكريم الخطابي ص ب 549 مراكـش المغرب- الهاتف :63 31 43 / 04 34 43 24 5(0)/ 11 95 09 70 6(0)  212 فاكس 70 31 43 24 5 (0)212<br><br>
+                Avenue AbdelkrimKhattabi B.P.549 Marrakech Maroc Tel. : 212(0)6 70 09 95 11 / (0)5 24 43 34 04 / 43 31 63 Fax : 212(0) 5 24 43 31 70</small>
+            </center>
+        <br><br>
+    </div>
+</div>
+{% endblock %}
+

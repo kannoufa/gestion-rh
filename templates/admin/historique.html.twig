@@ -1,19 +1,26 @@
 {% extends 'admin/slide.html.twig' %}
 
-{% block title %}historique des demandes{% endblock %}
+{% block title %}Historique de demandes{% endblock %}
  
 {% block body %}
-        <center><img src="https://www.studengo.com/assets/img/uniimages/Dessin12facsciencemarac_logo.png" style="align: right; " width=270px></center>
+<div class="container">
+        <center><img src="{{asset('assets/images/logo.png')}}" style="align: right; " width="370px"></center>
         <hr>
-        <h1>historique des demandes effectués</h1>     
+        <h1>historique des demandes effectués</h1>  
+            {{ form_start(form) }}
+                <div class="form-row align-items-baseline ">
+                    <div class="col-md-4">{{form_row(form.ppr)}}</div>
+                    <div class="col-md-4">{{form_row(form.typeDemande)}}</div>
+                    <div class="col-md-2">{{form_row(form.submit)}}</div>
+                </div><br>
+            {{ form_end(form) }}       
             <table class="table table-striped">
                 <thead>
                     <tr>
                     <th><i class="fa fa-user " aria-hidden="true"></i> Personnel</th>
                     <th><i class="fa fa-window-maximize " aria-hidden="true"></i> Type de la demande</th>
                     <th><i class="fa fa-calendar" aria-hidden="true"></i> Date d'envoi</th>
-                    <th><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Date de reçu/Refus</th>
-                    <th><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Statut</th>
+                    <th><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Date de reçu</th>
                     <th>Voir la demande</th>
                     </tr>
                 </thead>
@@ -22,24 +29,27 @@
                     {% for document in documents %}
                         <tr>
                             <td>{{ document.nomPrenom}}</td>
-                            <td>Demande {{ document.typeDemande }}</td>
-                            <td>{{ document.dateEnvoi | date('d/m/Y à h:i') }}</td>
-                            <td>{{ document.dateRecu | date('d/m/Y à h:i') }}</td>
-                            <td><span class="btn btn-sm rounded-pill btn-info">{{ document.statut}}</span></td>
-                            <td>
-                                <a href="{{ path('admin_document', {repo: document.typeDemande, id: document.idDemande}) }}" class="btn btn-warning btn-sm">
-                                    <i class="fa fa-eye" aria-hidden="true"></i > Voir
-                                </a>
-                            </td>
+                            <td>{{ document.typeDemande | type | raw }}</td>
+                            <td>{{ document.dateEnvoi | date('d/m/Y à H:i') }}</td>
+                            <td>{{ document.dateRecu | date('d/m/Y à H:i') }}</td>
+                            {% if document.typeDemande != 'AttestationSalaire' %}
+                                <td>
+                                    <a href="{{ path('admin_document', {repo: document.typeDemande, id: document.idDemande}) }}" class="btn btn-info btn-sm">
+                                        <i class="fa fa-eye" aria-hidden="true"></i > Voir
+                                    </a>
+                                </td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
                         </tr>      
                     {% endfor %}
                 </tbody>
-                </table>
-                {% else %}
+            </table>
+            {% else %}
                 <center><p class="badge rounded-pill bg-danger">Il n'y a aucune demande</p></center>
-                {% endif %}
-                <div class="pagination">
-                    {{knp_pagination_render(documents) }}
-                </div><br>
+            {% endif %}
+            <div class="pagination">
+                {{knp_pagination_render(documents) }}
+            </div><br>
 </div>
 {% endblock %}

@@ -2,18 +2,14 @@
 
 namespace App\Form;
 
-use App\Entity\User;
 use App\Entity\Absence;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AbsenceType extends AbstractType
@@ -27,35 +23,36 @@ class AbsenceType extends AbstractType
                     'class' => 'form-control text-right'
                 ]
             ])
-            ->add('duree', TextType::class, [
+            ->add('duree', IntegerType::class, [
+                'label' => 'duree (nombre du jours d\'absence)',
                 'required' => true,
                 'attr' => [
                     'placeholder' => '... عدد الأيام',
                     'class' => 'form-control text-right'
                 ],
             ])
-            ->add('apartir', TextType::class, [
+            ->add('apartir', DateType::class, [
+                'widget' => 'single_text',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'jj/mm/aaaa ابتداءا من',
                     'class' => 'form-control text-right'
                 ],
-            ])->add('brochure', FileType::class, [
-                'label' => 'Motif (.PDF )',
-                'mapped' => false,
-                'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'application/pdf',
-                            'application/x-pdf',
-                        ],
-                        'mimeTypesMessage' => 'Veuillez respecter le format(.pdf)',
-                    ])
+            ])
+            ->add('jusquA', DateType::class, [
+                'widget' => 'single_text',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'jj/mm/aaaa الى',
+                    'class' => 'form-control text-right'
                 ],
             ])
-            ->add('Envoyer', SubmitType::class);
+            ->add('motifFile', FileType::class, [
+                'required' => true,
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Envoyer la demande',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -63,12 +60,6 @@ class AbsenceType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Absence::class,
         ]);
-    }
-
-    public function getFilieres()
-    {
-        $filieres = Absence::FILIERE;
-        return $filieres;
     }
 
     public function getCauses()

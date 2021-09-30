@@ -35,6 +35,11 @@ class Historique
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $ppr;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $typeDemande;
 
     /**
@@ -46,11 +51,6 @@ class Historique
      * @ORM\Column(type="datetime")
      */
     private $dateRecu;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $statut;
 
     public function getId(): ?int
     {
@@ -93,6 +93,18 @@ class Historique
         return $this;
     }
 
+    public function getPpr(): ?string
+    {
+        return $this->ppr;
+    }
+
+    public function setPpr(string $ppr): self
+    {
+        $this->ppr = $ppr;
+
+        return $this;
+    }
+
     public function getTypeDemande(): ?string
     {
         return $this->typeDemande;
@@ -125,18 +137,6 @@ class Historique
     public function setDateRecu(\DateTime $dateRecu): self
     {
         $this->dateRecu = $dateRecu;
-
-        return $this;
-    }
-
-    public function getStatut(): ?string
-    {
-        return $this->statut;
-    }
-
-    public function setStatut(string $statut): self
-    {
-        $this->statut = $statut;
 
         return $this;
     }

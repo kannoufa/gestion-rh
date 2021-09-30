@@ -1,0 +1,38 @@
+{% extends 'admin/slide.html.twig' %}
+ 
+{% block body %}
+<div class="container">
+    <center><img src="{{asset('assets/images/logo.png')}}" style="align: right; " width="370px"></center>
+    <hr>
+    <h1>{% block titre %}{% endblock %}</h1>
+    <table class="table table-striped text-center">
+        <thead>
+            <tr>
+                <th><i class="fa fa-vcard-o" aria-hidden="true"></i> Personnel</th>
+                <th><i class="fa fa-calendar" aria-hidden="true"></i> Date de la demande</th>
+                {% block col_head %}{% endblock %}
+                <th><i class="fa fa-gears" aria-hidden="true"></i> Actions</th>
+            </tr>
+        </thead>
+        {% if documents|length > 0 %}
+            <tbody>
+                {% for document in documents %}
+                    <tr>
+                        <td>{{ document.personnel.nom }} {{ document.personnel.prenom }}</td>
+                        <td>{{ document.createdAt | date('d/m/Y à H:i') }}</td>
+                        {% block col_body %}{% endblock %}
+                        <td>
+                            {% block buttons %}{% endblock %}
+                        </td>
+                    </tr>      
+                {% endfor %}
+            </tbody>
+    </table>
+        {% else %}
+            <center><p class="badge rounded-pill bg-danger">Il n'y a aucune demande</p></center>
+        {% endif %}
+        <div class="pagination">
+            {{knp_pagination_render(documents) }}
+        </div><br>
+</div>
+{% endblock %}

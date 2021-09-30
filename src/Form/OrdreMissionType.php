@@ -5,13 +5,11 @@ namespace App\Form;
 use App\Entity\User;
 use App\Entity\OrdreMission;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -37,11 +35,13 @@ class OrdreMissionType extends AbstractType
             ->add('membres', TextType::class, [
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'nombre de personnes de la mission ...',
+                    'placeholder' => 'les membres de la mission ...',
                     'class' => 'form-control'
                 ],
             ])
             ->add('date_depart', DateType::class, [
+                'label' => 'Date de départ',
+                'widget' => 'single_text',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'date de départ de la mission ...',
@@ -49,13 +49,16 @@ class OrdreMissionType extends AbstractType
                 ],
             ])
             ->add('heure_dep', TextType::class, [
+                'label' => 'Heure de départ',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'heure de départ hh:mm ...',
+                    'placeholder' => 'hh:mm',
                     'class' => 'form-control'
                 ],
             ])
             ->add('date_retour', DateType::class, [
+                'label' => 'Heure de retour',
+                'widget' => 'single_text',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'date de retour de la mission  ...',
@@ -65,7 +68,7 @@ class OrdreMissionType extends AbstractType
             ->add('heure_retour', TextType::class, [
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'heure de retour hh:mm ...',
+                    'placeholder' => 'hh:mm',
                     'class' => 'form-control'
                 ],
             ])
@@ -76,22 +79,12 @@ class OrdreMissionType extends AbstractType
                     'placeholder' => 'Oui/Non?',
                     'class' => 'form-control'
                 ],
-            ])->add('brochure', FileType::class, [
-                'label' => 'Motif (.PDF )',
-                'mapped' => false,
-                'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'application/pdf',
-                            'application/x-pdf',
-                        ],
-                        'mimeTypesMessage' => 'Veuillez respecter le format(.pdf)',
-                    ])
-                ],
+            ])->add('motifFile', FileType::class, [
+                'required' => false
             ])
-            ->add('Envoyer', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'label' => 'Envoyer l\'ordre de mission',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

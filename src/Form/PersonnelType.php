@@ -6,7 +6,6 @@ use App\Entity\DepartementService;
 use App\Entity\Personnel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -14,8 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 
 class PersonnelType extends AbstractType
@@ -45,6 +44,7 @@ class PersonnelType extends AbstractType
                 ],
             ])
             ->add('nom_ar', TextType::class, [
+                'label' => 'Nom (Arabe)',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'nom en Arabe',
@@ -59,6 +59,7 @@ class PersonnelType extends AbstractType
                 ],
             ])
             ->add('prenom_ar', TextType::class, [
+                'label' => 'Preom (Arabe)',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'nom en Arabe',
@@ -66,18 +67,21 @@ class PersonnelType extends AbstractType
                 ],
             ])
             ->add('date_naissance', DateType::class, [
+                'widget' => 'single_text',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control'
                 ],
             ])
             ->add('date_recrutement', DateType::class, [
+                'widget' => 'single_text',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control'
                 ],
             ])
             ->add('sexe_ar', ChoiceType::class, [
+                'label' => 'Sexe (Arabe)',
                 'choices' => $this->getSexeAr(),
                 'required' => true,
                 'attr' => [
@@ -85,6 +89,7 @@ class PersonnelType extends AbstractType
                 ],
             ])
             ->add('nationalite_ar', TextType::class, [
+                'label' => 'Nationalité (Arabe)',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'nationalité en Arabe',
@@ -99,12 +104,13 @@ class PersonnelType extends AbstractType
                 ],
             ])
             ->add('date_effet_echelon', DateType::class, [
+                'widget' => 'single_text',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control'
                 ],
             ])
-            ->add('anciennete_echelon', TextType::class, [
+            ->add('anciennete_echelon', IntegerType::class, [
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'nombre d\'année d\'ancienneté ...',
@@ -112,6 +118,7 @@ class PersonnelType extends AbstractType
                 ],
             ])
             ->add('grade_ar', TextType::class, [
+                'label' => 'Grade (Arabe)',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'grade en Arabe',
@@ -119,12 +126,14 @@ class PersonnelType extends AbstractType
                 ],
             ])
             ->add('date_effet_grade', DateType::class, [
+                'widget' => 'single_text',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control'
                 ],
             ])
-            ->add('anciennete_grade', TextType::class, [
+            ->add('anciennete_grade', IntegerType::class, [
+                'label' => 'ancienneté grade',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'nombre d\'année d\'ancienneté',
@@ -132,6 +141,7 @@ class PersonnelType extends AbstractType
                 ],
             ])
             ->add('situation_administrative_ar', TextType::class, [
+                'label' => 'Situation administrative (Arabe)',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'situation administrative en Arabe ...',
@@ -146,12 +156,14 @@ class PersonnelType extends AbstractType
                 ],
             ])
             ->add('date_fonction', DateType::class, [
+                'widget' => 'single_text',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control'
                 ],
             ])
-            ->add('anciennete_administrative', TextType::class, [
+            ->add('anciennete_administrative', IntegerType::class, [
+                'label' => "Ancienneté administrative",
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'nombre d\'année ...',
@@ -159,6 +171,7 @@ class PersonnelType extends AbstractType
                 ],
             ])
             ->add('etablissement_ar', TextType::class, [
+                'label' => 'établissement (Arabe)',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'établissement en Arabe',
@@ -173,12 +186,14 @@ class PersonnelType extends AbstractType
                 ],
             ])
             ->add('date_position', DateType::class, [
+                'widget' => 'single_text',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control'
                 ],
             ])
             ->add('situation_familiale_ar', ChoiceType::class, [
+                'label' => 'Situation familiale (Arabe)',
                 'choices' => $this->getSituationFamilireAr(),
                 'required' => true,
                 'attr' => [
@@ -191,28 +206,115 @@ class PersonnelType extends AbstractType
                     'placeholder' => 'email ...',
                     'class' => 'form-control'
                 ],
+            ])->add('sexe', ChoiceType::class, [
+                'choices' => $this->getSexe(),
+                "attr" => [
+                    "class" => "form-control",
+                ]
+            ])
+            ->add('lieunaiss', TextType::class, [
+                'label' => "Lieu de naissance",
+                "attr" => [
+                    "class" => "form-control",
+                    'placeholder' => 'lieu de naissance ...'
+                ]
+            ])
+            ->add('nationalite', TextType::class, [
+                'label' => 'Nationalité',
+                "attr" => [
+                    "class" => "form-control",
+                    'placeholder' => 'nationalité en Français ...'
+                ]
+            ])
+            ->add('etatcivil', ChoiceType::class, [
+                'label' => 'état civil',
+                'choices' => $this->getEtatCivil(),
+                "attr" => [
+                    "class" => "form-control",
+                    'placeholder' => 'état civil en Français ...'
+                ]
+            ])
+            ->add('situationconj', TextType::class, [
+                'required' => false,
+                'label' => "Situation de conjoint",
+                "attr" => [
+                    "class" => "form-control",
+                    'placeholder' => 'situation de conjoint ...'
+                ]
+            ])
+            ->add('doticonj', TextType::class, [
+                'required' => false,
+                'label' => 'Doti du conjoint',
+                "attr" => [
+                    "class" => "form-control",
+                    'placeholder' => 'doti de conjoint ...'
+                ]
+            ])
+            ->add('nbrenfant', IntegerType::class, [
+                'required' => false,
+                'empty_data' => 0,
+                'label' => 'Nombre d\'enfant',
+                "attr" => [
+                    "class" => "form-control",
+                    'placeholder' => 'nombre d\'enfant ...'
+                ]
+            ])
+            ->add('grade', TextType::class, [
+                "attr" => [
+                    "class" => "form-control",
+                    'placeholder' => 'grade ...'
+                ]
+            ])
+            ->add('echelle', TextType::class, [
+                "attr" => [
+                    "class" => "form-control",
+                    'placeholder' => 'echelle ...'
+                ]
+            ])
+            ->add('indice', TextType::class, [
+                "attr" => [
+                    "class" => "form-control",
+                    'placeholder' => 'indice ...'
+                ]
+            ])
+            ->add('diplome', TextType::class, [
+                "attr" => [
+                    "class" => "form-control",
+                    'placeholder' => 'diplome ...'
+                ]
+            ])
+            ->add('adpersonnel', TextType::class, [
+                'label' => "Adresse personnel",
+                "attr" => [
+                    "class" => "form-control",
+                    'placeholder' => 'adresse personnel ...'
+                ]
+            ])
+            ->add('advacance', TextType::class, [
+                'required' => false,
+                'label' => "Adresse de vacance",
+                "attr" => [
+                    "class" => "form-control",
+                    'placeholder' => 'adresse de vacance ...'
+                ]
+            ])
+            ->add('telephonne', TextType::class, [
+                "attr" => [
+                    "class" => "form-control",
+                    'placeholder' => 'téléphone ...'
+                ]
             ])->add('departementService', EntityType::class, [
                 "class" => DepartementService::class,
                 "choice_label" => "nomFr",
                 "attr" => [
                     "class" => "form-control"
                 ]
-            ])->add('photo', FileType::class, [
-                'label' => 'Photo (.PDF )',
-                'mapped' => false,
+            ])->add('imageFile', FileType::class, [
                 'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'application/pdf',
-                            'application/x-pdf',
-                        ],
-                        'mimeTypesMessage' => 'Veuillez respecter le format(.pdf)',
-                    ])
-                ],
             ])
-            ->add('Enregistrer', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'label' => 'Enregistrer',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -237,6 +339,26 @@ class PersonnelType extends AbstractType
         $situation_familiale_ar = Personnel::SITUATIONFAMILIAIREAR;
         $output = [];
         foreach ($situation_familiale_ar as $key => $value) {
+            $output[$value] = $key;
+        }
+        return $output;
+    }
+
+    public function getSexe()
+    {
+        $sexe = Personnel::SEXE;
+        $output = [];
+        foreach ($sexe as $key => $value) {
+            $output[$value] = $key;
+        }
+        return $output;
+    }
+
+    public function getEtatCivil()
+    {
+        $etat = Personnel::ETATCIVIL;
+        $output = [];
+        foreach ($etat as $key => $value) {
             $output[$value] = $key;
         }
         return $output;

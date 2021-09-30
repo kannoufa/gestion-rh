@@ -1,12 +1,103 @@
 {% extends 'user/slide.html.twig' %}
 
-{% block title %}Acceuil - Admin{% endblock %}
+{% block title %}Acceuil{% endblock %}
  
 {% block body %}
-    <div>
-        <center><img src="../assets/images/logo.png" style="align: right; " width="370px"></center>
-        <hr> 
-    <h1>Bienvenue {{app.user.username}}</h1>
-</div>
+<div class="container">
+    <center><img src="{{asset('assets/images/logo.png')}}" style="align: right; " width="370px"></center>
+    <hr>
+        <h1>Suivre les demandes</h1> 
+    <!-- Absences -->
+    {% if app.user.personnel.absences | length > 0 %}
+        <table class="table table-striped">
+            <tr class="table-info">
+                <td colspan="2" class="text-center"><i class="fa fa-window-maximize" aria-hidden="true"></i> Demande d'absence</td>
+                <td><i class="fa fa-bell" aria-hidden="true"></i> Statut</td>                   
+            </tr>
+            {% for  demande in app.user.personnel.absences %}
+                {% if demande.statut != 'Reçu' and demande.statut != 'Refusé' %}
+                    <tr>
+                        <td colspan="2">   
+                            {% if demande.statut == 'Refusé par le département' or  demande.statut == 'Refusé par l\'administration' %}
+                                <a href="{{ path('user_delete', {repo: 'Absence' ,id: demande.id}) }}" class="btn-info btn">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a> &nbsp; &nbsp; &nbsp;
+                            {% endif %}
+                            Vous avez déposez une demande d'absence {{demande.cause | cause | raw}} le {{demande.createdAt | date('d/m/Y à H:i')}}
+                        </td>                 
+                        <td><span class="btn btn-sm rounded-pill btn-danger">{{ demande.statut}}</span></td>
+                    </tr> 
+                {% endif %}
+            {% endfor %}
+        </table><br>
+    {% endif %}
 
+    <!-- Ordres de mission -->
+    {% if app.user.personnel.ordres | length > 0 %}
+        <table class="table table-striped">
+            <tr class="table-success">
+                <td colspan="2" class="text-center"><i class="fa fa-window-maximize" aria-hidden="true"></i> Demande d'ordre de mission</td>
+                <td><i class="fa fa-bell" aria-hidden="true"></i> Statut</td>                   
+            </tr>
+            {% for  demande in app.user.personnel.ordres %}
+                {% if demande.statut != 'Reçu' and demande.statut != 'Refusé' %}
+                    <tr>
+                        <td colspan="2">
+                            {% if demande.statut == 'Refusé par le département' or  demande.statut == 'Refusé par l\'administration' %}
+                                <a href="{{ path('user_delete', {repo: 'OrdreMission' ,id: demande.id}) }}" class="btn btn-success">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                            {% endif %}  &nbsp; &nbsp; &nbsp;
+                            Vous avez déposez une demande d'ordre de mission (destination : <b>{{demande.destination}}</b>) le {{demande.createdAt | date('d/m/Y à H:i')}}
+                        </td>                  
+                        <td><span class="btn btn-sm rounded-pill btn-danger">{{ demande.statut}}</span></td>
+                    </tr> 
+                {% endif %}
+            {% endfor %}
+        </table><br>
+    {% endif %}
+
+    <!-- Attestation de salaire -->
+    {% if app.user.personnel.attestations_salaire | length > 0 %}
+        <table class="table table-striped">
+            <tr class="table-warning">
+                <td colspan="2" class="text-center"><i class="fa fa-window-maximize" aria-hidden="true"></i> Demande d'attestation de salaire</td>
+                <td><i class="fa fa-bell" aria-hidden="true"></i> Statut</td>                   
+            </tr>
+            {% for  demande in app.user.personnel.attestations_salaire %}
+                {% if demande.statut != 'Reçu' %}
+                    <tr>
+                        <td colspan="2">
+                            Vous avez déposez une demande d'attestation de salaire (<b>{{demande.type}}</b>) le {{demande.createdAt | date('d/m/Y à H:i')}}
+                        </td>                   
+                        <td><span class="btn btn-sm rounded-pill btn-danger">{{ demande.statut}}</span></td>
+                    </tr> 
+                {% endif %}
+            {% endfor %}
+        </table><br>
+    {% endif %}
+
+    <!-- Attestation de travail -->
+    {% if app.user.personnel.attestations_travail | length > 0 %}
+        <table class="table table-striped">
+            <tr class="table-danger">
+                <td colspan="2" class="text-center"><i class="fa fa-window-maximize" aria-hidden="true"></i> Demande d'attestation de travail</td>
+                <td><i class="fa fa-bell" aria-hidden="true"></i> Statut</td>                   
+            </tr>
+            {% for  demande in app.user.personnel.attestations_travail %}
+                {% if demande.statut != 'Reçu' %}
+                        <tr>
+                            <td colspan="2">
+                                Vous avez déposez une demande d'attestation de travail le {{demande.createdAt | date('d/m/Y à H:i')}}
+                            </td>                   
+                            <td><span class="btn btn-sm rounded-pill btn-danger">{{ demande.statut}}</span></td>
+                        </tr>
+                {% endif %}
+            {% endfor %}
+        </table><br>
+    {% endif %}
+    {% if app.user.personnel.ordres | length < 0 and app.user.personnel.absences | length < 0 and app.user.personnel.attestations_travail | length < 0 and app.user.personnel.attestations_salaire | length < 0 %}
+        <center><span class="btn btn-sm rounded-pill btn-danger">Vous n'avez aucune demande en cours de traitement</span></center>
+    {% endif %}
+</div>
 {% endblock %}

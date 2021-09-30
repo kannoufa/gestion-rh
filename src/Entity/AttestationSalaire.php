@@ -13,8 +13,8 @@ class AttestationSalaire
 {
     const TYPE = [
         0 => 'Mois Actuel',
-        1 => 'Trimmeste Actuel',
-        2 => 'Annee Actuelle',
+        1 => 'Trimeste Actuel',
+        2 => 'Année Actuelle',
     ];
 
     /**

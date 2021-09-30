@@ -24,10 +24,12 @@ class MessageRepository extends ServiceEntityRepository
     /**
      * @return Query[]
      */
-    public function findAllVisibleQuery(): Query
+    public function findAllVisibleQuery($id_user): Query
     {
         $query = $this->findVisibleQuery();
         $query = $query
+            ->andWhere('p.recipient = :recipient_id')
+            ->setParameter('recipient_id', $id_user)
             ->orderBy("p.created_at", "DESC");
 
         return $query->getQuery();

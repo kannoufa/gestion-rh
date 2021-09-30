@@ -1,0 +1,53 @@
+{% extends 'user/slide.html.twig' %}
+
+{% block title %}طلب رخصة أو إذن بالتغيب{% endblock %}
+ 
+{% block body %}
+<div class="container">
+    <div id="sectionAimprimer" dir="rtl" lang="ar">
+            <div style="text-align: right; line-height: 0.5; padding:30px 40px 0 40px;font-family:times; font-size: 19px">
+                <p>جامعة القاضي عياض</p>
+                <p>&nbsp;كلية العلوم والتقنيات</p>
+                <p>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;مراکش
+                    <center><u><b>(*)طلب رخصة أو إذن بالتغيب</b></u></center>
+                </p><br>
+                <p>  
+                    الإسـم الكـامـل &nbsp; &nbsp; &nbsp; : &nbsp; {{ document.nomar }} {{ document.prenomar }} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    الإطار &nbsp; &nbsp; : &nbsp; &nbsp; {{ document.grade }}
+                </p>
+                <p> المصلحة أو الشعبة : &nbsp;  {{ document.filiere }}</p>
+                <p> سبب الغيـاب &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; {{ document.cause }}</p>
+                <p> مـدة الغيــاب &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; {{ document.duree }} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    ابتداء من &nbsp; &nbsp; : &nbsp; &nbsp; {{ document.apartir | date('d/m/Y') }}
+                </p>                    
+                <p>: مراكـش فـي &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp;  {{ document.createdAt | date('d/m/Y') }}   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    توقيع الموظف
+                </p>
+                <p>&nbsp; قرار السيد رئيس الشعبة أو المصلحة : 
+                    {% if document.statut == 'En attante de validation par le département' %}
+                        <a href="{{ path('user_change_statut', {repo: 'Absence', id: document.id, etat: 'Validé par le département'}) }}" class="btn btn-success">
+                            <i class="fa fa-check" aria-hidden="true"></i> Validé
+                        </a>
+                        <a href="{{ path('user_change_statut', {repo: 'Absence', id: document.id, etat: 'Refusé par le département'}) }}" class="btn btn-danger">
+                            <i class="fa fa-times" aria-hidden="true"></i> Refusé 
+                        </a>
+                    {% else %}
+                        &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+                        <div class="alert alert-info">La demande est déja envoyé. Vous ne pouvez pas modifier votre décision!</div>
+                    {% endif %}
+                </p>
+                <p><br></p>
+                <strong>
+                    <p style="text-align: left">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;خـاتـم المؤسسة </p>
+                    <p>&nbsp;.يسحب الطلب من مقر العمل ويعاد إليه بعد تعبئته - (*) </p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                    <p>. لا تعتبر الرخصة سارية المفعول إلا بعد تلقي الموافقة الفعلية عليها -</p>
+                </strong>
+                <br><hr>
+            </div>
+                
+    </div>
+</div>
+{% endblock %}
+
+
+  

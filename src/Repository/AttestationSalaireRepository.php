@@ -28,9 +28,9 @@ class AttestationSalaireRepository extends ServiceEntityRepository
     {
         $query = $this->findVisibleQuery();
         $query = $query
-            ->andWhere('p.statut <> :statut')
-            ->orderBy("p.created_at", "DESC")
-            ->setParameter('statut', 'Reçu');
+            ->andWhere('p.statut <> :statut1')
+            ->setParameter('statut1', 'Reçu')
+            ->orderBy("p.created_at", "DESC");
 
         return $query->getQuery();
     }

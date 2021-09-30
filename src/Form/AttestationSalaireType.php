@@ -14,14 +14,16 @@ class AttestationSalaireType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Type', ChoiceType::class, [
+            ->add('type', ChoiceType::class, [
                 'choices' => $this->getType(),
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control'
                 ],
             ])
-            ->add('Envoyer', SubmitType::class, []);
+            ->add('submit', SubmitType::class, [
+                'label' => 'Demander l\'attestation',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -33,9 +35,9 @@ class AttestationSalaireType extends AbstractType
 
     public function getType()
     {
-        $type = AttestationSalaire::TYPE;
+        $types = AttestationSalaire::TYPE;
         $output = [];
-        foreach ($type as $key => $value) {
+        foreach ($types as $key => $value) {
             $output[$value] = $key;
         }
         return $output;

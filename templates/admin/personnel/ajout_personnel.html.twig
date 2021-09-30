@@ -1,0 +1,99 @@
+{% extends 'user/slide.html.twig' %}
+
+{% block title %}{{ titre }}{% endblock %}
+ 
+{% block body %}
+<div class="container">
+    <div class="row"> 
+        <div class="col-md-3">
+            <div class="logo_background">
+                <img src="{{asset('assets/images/logo_bleu.gif')}}" width="320px" class="logo_form"/>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-7 form">
+            <h1>{{ titre }}</h1>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {{ form_start(form) }}
+                <ul>
+                    <li class="form-list__row">
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.ppr) }}</div>
+                            <div class="col-md-6">{{ form_row(form.cin) }}</div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.nom) }}</div>
+                            <div class="col-md-6">{{ form_row(form.nom_ar) }}</div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.prenom) }}</div>
+                            <div class="col-md-6">{{ form_row(form.prenom_ar) }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.sexe) }}</div>
+                            <div class="col-md-6">{{ form_row(form.sexe_ar) }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.nationalite) }}</div>
+                            <div class="col-md-6">{{ form_row(form.nationalite_ar) }}</div>
+                        </div>                        
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.date_naissance) }}</div>
+                            <div class="col-md-6">{{ form_row(form.lieunaiss) }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.etatcivil) }}</div>
+                            <div class="col-md-6">{{ form_row(form.situation_familiale_ar) }}</div>
+                        </div>
+                        <div class="row align-items-end">            
+                            <div class="col-md-4">{{ form_row(form.situationconj) }}</div>
+                            <div class="col-md-4">{{ form_row(form.doticonj) }}</div>
+                            <div class="col-md-4">{{ form_row(form.nbrenfant) }}</div>
+                        </div>
+                        <div class="row">            
+                            <div class="col-md-6">{{ form_row(form.telephonne) }}</div>
+                            <div class="col-md-6">{{ form_row(form.email) }}</div>
+                        </div>
+                        <div>{{ form_row(form.adpersonnel) }}</div>
+                        <div>{{ form_row(form.advacance) }}</div>
+                        <div>{{ form_row(form.diplome) }}</div>
+                        <div>{{ form_row(form.date_recrutement) }}</div>
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.echelle) }}</div>
+                            <div class="col-md-6">{{ form_row(form.indice) }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.grade) }}</div>
+                            <div class="col-md-6">{{ form_row(form.grade_ar) }}</div>
+                        </div>
+                        <div class="row">            
+                            <div class="col-md-6">{{ form_row(form.anciennete_grade) }}</div>
+                            <div class="col-md-6">{{ form_row(form.date_effet_grade) }}</div>
+                        </div>
+                        <div class="row align-items-end">            
+                            <div class="col-md-4">{{ form_row(form.echellon) }}</div>
+                            <div class="col-md-4">{{ form_row(form.date_effet_echelon) }}</div>
+                            <div class="col-md-4">{{ form_row(form.anciennete_echelon) }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">{{ form_row(form.position) }}</div>
+                            <div class="col-md-4">{{ form_row(form.date_position) }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">{{ form_row(form.fonction) }}</div>
+                            <div class="col-md-4">{{ form_row(form.date_fonction) }}</div>
+                        </div>
+                        <div>{{ form_rest(form) }}</div>
+                    </li>
+
+                    
+                </ul>
+            {{ form_end(form) }}  
+        </div>
+    </div>
+</div>
+{% endblock %}

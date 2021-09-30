@@ -30,8 +30,14 @@ class OrdreMissionRepository extends ServiceEntityRepository
         $query = $query
             ->andWhere('p.statut <> :statut1')
             ->andWhere('p.statut <> :statut2')
-            ->setParameter('statut1', 'reçu')
+            ->andWhere('p.statut <> :statut3')
+            ->andWhere('p.statut <> :statut4')
+            ->andWhere('p.statut <> :statut5')
+            ->setParameter('statut1', 'Reçu')
             ->setParameter('statut2', 'Refusé par l\'administration')
+            ->setParameter('statut3', 'Refusé par le département')
+            ->setParameter('statut4', 'En attante de validation par le département')
+            ->setParameter('statut5', 'Refusé')
             ->orderBy("p.created_at", "DESC");
 
         return $query->getQuery();

@@ -16,46 +16,41 @@ class PersonnelSearchType extends AbstractType
         $builder
             ->add('ppr', TextType::class, [
                 'required' => false,
-                'label' => false,  # pour retirer le label
+                'label' => false,
                 'attr' => [
                     'placeholder' => 'P.P.R',
-                    'class' => 'col'
                 ],
             ])->add('nom', TextType::class, [
                 'required' => false,
-                'label' => false,  # pour retirer le label
+                'label' => false,
                 'attr' => [
                     'placeholder' => 'NOM',
-                    'class' => 'col'
                 ],
             ])->add('prenom', TextType::class, [
                 'required' => false,
-                'label' => false,  # pour retirer le label
+                'label' => false,
                 'attr' => [
                     'placeholder' => 'PRENOM',
-                    'class' => 'col'
                 ],
             ])->add('fonction', TextType::class, [
                 'required' => false,
-                'label' => false,  # pour retirer le label
+                'label' => false,
                 'attr' => [
                     'placeholder' => 'FONCTION',
-                    'class' => 'col'
                 ],
             ])->add('grade', TextType::class, [
                 'required' => false,
-                'label' => false,  # pour retirer le label
+                'label' => false,
                 'attr' => [
                     'placeholder' => 'GRADE',
-                    'class' => 'col'
                 ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Rechercher',
                 'attr' => [
-                    'class' => 'col btn btn-success'
+                    'class' => 'col btn-sm btn-success'
                 ],
-            ]);;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
