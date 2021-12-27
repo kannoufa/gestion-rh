@@ -75,20 +75,20 @@ class DocumentService
                 $documents = $this->paginator->paginate(
                     $repository->findAllVisibleQuery($search),
                     $request->query->getInt('page', 1),
-                    7
+                    4
                 );
             else
                 $documents = $this->paginator->paginate(
                     $repository->findAllVisibleQuery(),
                     $request->query->getInt('page', 1),
-                    7
+                    4
                 );
             $twig = $this->repoService->getRepository($repo)['twig_liste_document'];
         } else {
             $documents = $this->paginator->paginate(
                 $this->absenceRepository->findAbsenceRecu($search),
                 $request->query->getInt('page', 1),
-                60
+                4
             );
             $twig = "admin/absence/tab_absence.html.twig";
         }
