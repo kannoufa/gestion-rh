@@ -19,36 +19,41 @@ class PersonnelSearchType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'P.P.R',
+                    'class' => 'form-control mb-2 mr-sm-2',
                 ],
             ])->add('nom', TextType::class, [
                 'required' => false,
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'NOM',
+                    'class' => 'form-control mb-2 mr-sm-2',
                 ],
             ])->add('prenom', TextType::class, [
                 'required' => false,
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'PRENOM',
+                    'class' => 'form-control mb-2 mr-sm-2',
                 ],
             ])->add('fonction', TextType::class, [
                 'required' => false,
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'FONCTION',
+                    'class' => 'form-control mb-2 mr-sm-2',
                 ],
             ])->add('grade', TextType::class, [
                 'required' => false,
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'GRADE',
+                    'class' => 'form-control mb-2 mr-sm-2',
                 ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Rechercher',
                 'attr' => [
-                    'class' => 'col btn-sm btn-success'
+                    'class' => 'btn btn-gradient-primary mb-2'
                 ],
             ]);
     }

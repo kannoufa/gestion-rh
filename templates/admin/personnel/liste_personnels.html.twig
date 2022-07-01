@@ -3,68 +3,86 @@
 {% block title %}Liste des personnels{% endblock %}
  
 {% block body %}
-<div class="container">
-    <center><img src="{{asset('assets/images/logo.png')}}" style="align: right; " width="370px"></center>
-    <hr>
-    <h1>Liste des personnels</h1>
-    {{ form_start(form) }}
-        <div class="row">
-            <div class="col-md-2">{{form_row(form.ppr)}}</div>
-            <div class="col-md-2">{{form_row(form.nom)}}</div>
-            <div class="col-md-2">{{form_row(form.prenom)}}</div>
-            <div class="col-md-2">{{form_row(form.fonction)}}</div>
-            <div class="col-md-2">{{form_row(form.grade)}}</div>
-            <div class="col-md-2">{{form_row(form.submit)}}</div>
-        </div><br>
-    {{ form_end(form) }}
-    <table class="table table-striped text-center">
-        <thead>
-            <tr>
-                <th>Ppr</th>
-                <th><i class="fa fa-vcard-o" aria-hidden="true"></i> Nom et Prénom</th>
-                <th><i class="fa fa-calendar" aria-hidden="true"></i> Date de fonction</th>
-                <th><i class="fa fa-file" aria-hidden="true"></i> Fiche de renseignement</th>
-                <th><i class="fa fa-gears" aria-hidden="true"></i> Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% if documents|length > 0 %}
-                {% for personnel in documents %}
-                    <tr>
-                        <th>{{personnel.ppr}}</th>
-                        <td>{{personnel.nom}} {{personnel.prenom}}</td>
-                        <td>{{personnel.dateFonction | date('d/m/Y')}}</td>
-                        <td>
-                            <a href="{{ path('admin_document', {repo: 'FicheRenseignement', id: personnel.id}) }}" class="btn btn-warning btn-sm">
-                                <i class="fa fa-eye" aria-hidden="true"></i> Voir
-                            </a>
-                        </td>
-                        <td>
-                            <a href="{{ path('admin_document', {repo: 'Personnel', id: personnel.id}) }}" class="btn btn-info btn-sm">
-                                <i class="fa fa-info" aria-hidden="true"></i> Voir le profil
-                            </a>
-                            <a href="{{ path('admin_set_personnel', {id: personnel.id}) }}" class="btn btn-secondary btn-sm">
-                                <i class="fa fa-pencil" aria-hidden="true"></i> Modifier le profil
-                            </a>  
-                        </td>
-                    </tr>
-                            
-                {% endfor %}                
-        </tbody>
-    </table>
-            <a href="{{path("exportpersonnel")}}" class="btn btn-success">
-                <i class="fa fa-download" aria-hidden="true"></i> Exporter Excel
-            </a>
-            <a href="{{ asset('list_personnel.xlsx') }}" class="btn btn-success">
-                <i class="fa fa-file-excel-o" aria-hidden="true"></i> Télécharger (EXCEL)
-            </a>
-        {% else %}
-            <center><p class="badge rounded-pill bg-danger">Aucun résultat trouvé</p></center>
-        {% endif %}
 
-    <div class="pagination">
-            {{knp_pagination_render(documents) }}
-    </div><br>
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi mdi-account-multiple-outline"></i>
+        </span> Liste des personnels
+    </h3>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            {{ form_start(form) }}
+            <div class="form-row align-items-baseline">
+                <div class="col-md-2">{{form_row(form.ppr)}}</div>
+                <div class="col-md-2">{{form_row(form.nom)}}</div>
+                <div class="col-md-2">{{form_row(form.prenom)}}</div>
+                <div class="col-md-2">{{form_row(form.fonction)}}</div>
+                <div class="col-md-2">{{form_row(form.grade)}}</div>
+                <div class="col-md-2">{{form_row(form.submit)}}</div>
+            </div><br>
+            {{ form_end(form) }}
+        </div>
+        
+        <div class="table-responsive">
+            {% if documents|length > 0 %}
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Ppr</th>
+                        <th>Nom et Prénom</th>
+                        <th>Date de fonction</th>
+                        <th>Fiche de renseignement</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for personnel in documents %}
+                        <tr>
+                            <td><img src="{{ asset('uploads/images/personnels/' ~ personnel.filename) }}" class="mr-2" alt="image"></td>
+                            <th>{{personnel.ppr}}</th>
+                            <td>{{personnel.nom}} {{personnel.prenom}}</td>
+                            <td>{{personnel.dateFonction | date('d/m/Y')}}</td>
+                            <td>
+                                <a href="{{ path('admin_document', {repo: 'FicheRenseignement', id: personnel.id}) }}" class="btn btn-outline-dark btn-sm btn-icon-text">
+                                    <i class="mdi mdi-eye btn-icon-prepend"></i> Voir
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ path('admin_document', {repo: 'Personnel', id: personnel.id}) }}" class="btn btn-outline-secondary btn-icon-text btn-sm">
+                                    <i class="mdi mdi-eye btn-icon-prepend" aria-hidden="true"></i> Voir le profil
+                                </a>
+                                <a href="{{ path('admin_set_personnel', {id: personnel.id}) }}" class="btn btn-outline-secondary btn-icon-text btn-sm">
+                                     Modifier le profil <i class="mdi mdi-pencil btn-icon-append" aria-hidden="true"></i>
+                                </a>  
+                            </td>
+                        </tr>                        
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="btn-group m-4" role="group">
+                <a href="{{path("exportpersonnel")}}" class="btn btn-outline-primary btn-sm">
+                    <i class="mdi mdi-file-excel d-block mb-1"></i> Exporter Excel 
+                </a>
+                <a href="{{ asset('list_personnel.xlsx') }}" class="btn btn-outline-primary btn-sm">
+                    <i class="mdi mdi-download d-block mb-1"></i> Télécharger (EXCEL)
+                </a>
+            </div>
+
+            {% else %}
+                <center><p class="badge rounded-pill badge-danger">Aucun résultat trouvé</p></center>
+            {% endif %}
+
+            <div class="pagination mt-4">
+                {{knp_pagination_render(documents) }}
+            </div>
+        </div>
+    </div>    
 </div>
 {% endblock %}
     

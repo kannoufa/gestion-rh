@@ -16,11 +16,17 @@ class ParametreType extends AbstractType
         $builder
             ->add('logoFile', FileType::class, [
                 'label' => false,
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'class' => 'btn btn-block btn-gradient-secondary mb-2'
+                ],
             ])
             ->add('enTeteOrdreMissionFile', FileType::class, [
                 'label' => false,
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'class' => 'btn btn-block btn-gradient-secondary mb-2'
+                ],
             ]);
     }
 

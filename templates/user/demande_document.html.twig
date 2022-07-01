@@ -4,7 +4,14 @@
 {% block title %}{{ titre }}{% endblock %}
  
 {% block body %}
- <div class="container">      
-      {% include "includes/_form.html.twig" %}
- </div>
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-file-document-box"></i>
+        </span> {{ titre }}
+    </h3>
+</div>
+
+{% include "includes/_form.html.twig" %}
+
 {% endblock %}

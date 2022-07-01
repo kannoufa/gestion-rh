@@ -3,8 +3,17 @@
 {% block title %}طلب رخصة أو إذن بالتغيب{% endblock %}
  
 {% block body %}
-<div class="container">
-    <div id="sectionAimprimer" dir="rtl" lang="ar">
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-checkbox-marked"></i>
+        </span> Validation de la demande d'absence
+    </h3>
+</div>
+
+ <div class="card">
+    <div class="card-body">
+        <div dir="rtl" lang="ar">
             <div style="text-align: right; line-height: 0.5; padding:30px 40px 0 40px;font-family:times; font-size: 19px">
                 <p>جامعة القاضي عياض</p>
                 <p>&nbsp;كلية العلوم والتقنيات</p>
@@ -25,11 +34,11 @@
                 </p>
                 <p>&nbsp; قرار السيد رئيس الشعبة أو المصلحة : 
                     {% if document.statut == 'En attante de validation par le département' %}
-                        <a href="{{ path('user_change_statut', {repo: 'Absence', id: document.id, etat: 'Validé par le département'}) }}" class="btn btn-success">
-                            <i class="fa fa-check" aria-hidden="true"></i> Validé
+                        <a href="{{ path('user_change_statut', {repo: 'Absence', id: document.id, etat: 'Validé par le département'}) }}" class="btn btn-gradient-success btn-sm btn-icon-text">
+                            <i class="mdi mdi-check btn-icon-append" aria-hidden="true"></i> Validé
                         </a>
-                        <a href="{{ path('user_change_statut', {repo: 'Absence', id: document.id, etat: 'Refusé par le département'}) }}" class="btn btn-danger">
-                            <i class="fa fa-times" aria-hidden="true"></i> Refusé 
+                        <a href="{{ path('user_change_statut', {repo: 'Absence', id: document.id, etat: 'Refusé par le département'}) }}" class="btn btn-gradient-danger btn-sm btn-icon-text">
+                            <i class="mdi mdi-close btn-icon-append" aria-hidden="true"></i> Refusé 
                         </a>
                     {% else %}
                         &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
@@ -43,8 +52,8 @@
                     <p>. لا تعتبر الرخصة سارية المفعول إلا بعد تلقي الموافقة الفعلية عليها -</p>
                 </strong>
                 <br><hr>
-            </div>
-                
+            </div>         
+        </div>
     </div>
 </div>
 {% endblock %}

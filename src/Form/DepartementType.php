@@ -19,14 +19,14 @@ class DepartementType extends AbstractType
             ->add('NomFr', TextType::class, [
                 'label' => 'Nom de département/service (en Français)',
                 "attr" => [
-                    "class" => "form-control",
+                    'class' => 'form-control mb-4 mr-sm-2',
                     'placeholder' => 'Nom du département en Français ...'
                 ]
             ])
             ->add('NomAr', TextType::class, [
                 'label' => 'Nom de département/service (en Arabe)',
                 "attr" => [
-                    "class" => "form-control",
+                    'class' => 'form-control mb-4 mr-sm-2',
                     'placeholder' => 'Nom du département en Arabe ...'
                 ]
             ])
@@ -37,10 +37,13 @@ class DepartementType extends AbstractType
                     return $user->getPersonnel()->getNom() . ' ' . $user->getPersonnel()->getPrenom();
                 },
                 "attr" => [
-                    "class" => "form-control"
+                    'class' => 'form-control mb-4 mr-sm-2',
                 ]
             ])->add('submit', SubmitType::class, [
                 'label' => 'Ajouter',
+                'attr' => [
+                    'class' => 'btn btn-block btn-gradient-primary mb-2'
+                ],
             ]);
     }
 

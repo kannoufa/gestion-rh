@@ -3,40 +3,49 @@
 {% block title %}Chauffeurs{% endblock %}
 
 {% block body %}
-<div class="container">
-    <center><img src="{{asset('assets/images/logo.png')}}" style="align: right; " width="370px"></center>
-    <hr>
-    <h1>Chauffeurs</h1>
-    <a href="{{ path('admin_parametre', {repo : 'Chauffeur'}) }}" class="btn-success btn-sm">
-        <i class="fa fa-plus" aria-hidden="true"></i> Ajouter un chauffeur
-    </a>
-    <table class="table table-striped text-center">
-        <thead>
-            <tr>
-                <th><i class="fa fa-vcard-o" aria-hidden="true"></i> Nom et prénom</th>
-                <th><i class="fa fa-trash" aria-hidden="true"></i> Supprimer</th>
-            </tr>
-        </thead>
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-account"></i>
+        </span> Chauffeurs
+    </h3>
+</div>
+
+ <div class="card">
+    <div class="card-body">
+        <a href="{{ path('admin_parametre', {repo : 'Chauffeur'}) }}" class="btn-success btn-sm">
+            <i class="mdi mdi-database-plus" aria-hidden="true"></i> Ajouter un chauffeur
+        </a>
+
         {% if documents|length > 0 %}
-            <tbody>
-                {% for document in documents %}
+        <div class="table-responsive">
+            <table class="table text-center">
+                <thead>
                     <tr>
-                        <td>{{ document.nomPrenom }}</td>
-                        <td>
-                            <a href="{{ path('admin_delete', {repo:'Chauffeur', id:document.id}) }}" class="btn-danger btn-lg">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </a>
-                        </td>
-                    </tr>      
-                {% endfor %}
-            </tbody>
-        </table>
+                        <th>Nom et prénom</th>
+                        <th>Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for document in documents %}
+                        <tr>
+                            <td>{{ document.nomPrenom }}</td>
+                            <td>
+                                <a href="{{ path('admin_delete', {repo:'Chauffeur', id:document.id}) }}" class="btn btn-outline-danger btn-sm btn-icon-text">
+                                    <i class="mdi mdi-delete-forever text-danger"></i>
+                                </a>
+                            </td>
+                        </tr>      
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {% else %}
             <center><p class="badge rounded-pill bg-danger">Aucun résultat trouvé</p></center>
         {% endif %}
-        <div class="pagination">
+        <div class="pagination mt-4">
             {{knp_pagination_render(documents) }}
-        </div><br>
+        </div>
     </div>
 </div>
 

@@ -18,11 +18,14 @@ class ChauffeurType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'nom et prénom du chauffeur',
-                    'class' => 'form-control'
+                    'class' => 'form-control mb-4 mr-sm-2',
                 ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Ajouter',
+                'attr' => [
+                    'class' => 'btn btn-block btn-gradient-primary mb-2'
+                ],
             ]);
     }
 

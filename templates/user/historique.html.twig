@@ -3,19 +3,27 @@
 {% block title %}Historique{% endblock %}
  
 {% block body %}
-<div class="container">
-         <center><img src="{{asset('assets/images/logo.png')}}" style="align: right; " width="370px"></center>
-        <hr>
-        <h1>historique de mes demandes</h1>     
-            <table class="table table-striped">
+
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-format-list-bulleted"></i>
+        </span> historique de mes demandes
+    </h3>
+</div>
+
+ <div class="card">
+    <div class="card-body"> 
+        {% if documents|length > 0 %}   
+        <div class="table-responsive"> 
+            <table class="table">
                 <thead>
-                    <tr class="table-primary">
-                    <th><i class="fa fa-window-maximize " aria-hidden="true"></i> Type de la demande</th>
-                    <th><i class="fa fa-calendar" aria-hidden="true"></i> Date d'envoi</th>
-                    <th><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Date de reçu/refus</th>                   
+                    <tr>
+                        <th>Type de la demande</th>
+                        <th>Date d'envoi</th>
+                        <th>Date de reçu/refus</th>                   
                     </tr>
                 </thead>          
-                {% if documents|length > 0 %}
                 <tbody>
                     {% for document in documents %}
                         <tr>
@@ -29,8 +37,10 @@
             {% else %}
                 <center><p class="badge rounded-pill bg-danger">Vous n'avez effectué aucune demande</p></center>
             {% endif %}
-            <div class="pagination">
+            <div class="pagination mt-4">
                 {{knp_pagination_render(documents) }}
             </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

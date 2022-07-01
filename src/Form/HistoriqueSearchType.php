@@ -20,19 +20,19 @@ class HistoriqueSearchType extends AbstractType
                 'label' => false,  # pour retirer le label
                 'attr' => [
                     'placeholder' => 'P.P.R ...',
-                    'class' => 'form-control col'
+                    'class' => "form-control mb-2 mr-sm-2"
                 ],
             ])->add('typeDemande', ChoiceType::class, [
                 'choices' => $this->getType(),
-                'label' => false,  # pour retirer le label
+                'label' => false,
                 'attr' => [
-                    'class' => 'form-control col'
+                    'class' => "form-control mb-2 mr-sm-2"
                 ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Rechercher',
                 'attr' => [
-                    'class' => 'col btn btn-info'
+                    'class' => 'btn btn-block btn-gradient-primary mb-2'
                 ],
             ]);
     }

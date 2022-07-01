@@ -3,14 +3,21 @@
 {% block title %}Messagerie{% endblock %}
 
 {% block body %}
-<div class="container">
-    <center><img src="{{asset('assets/images/logo.png')}}" style="align: right; " width="370px"></center>
-            <hr>
-            <h1>Messagerie</h1>
-            <a href="{{ path('send') }}" class="btn-danger btn">
-                    <i class="fa fa-plus" aria-hidden="true"></i> Nouveau message
-            </a>
-            <table class="table table-striped table-hover">
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-email-variant"></i>
+        </span> Messagerie
+    </h3>
+</div>
+
+ <div class="card">
+    <div class="card-body">
+        <a href="{{ path('send') }}" class="btn-gradient-danger btn-sm btn mb-3">
+            <i class="mdi mdi-mail" aria-hidden="true"></i> Nouveau message
+        </a>
+        <div class="table-responsive">   
+            <table class="table">
                 <tbody>
                     {% for message in messages %} 
                     <tr class="unread">
@@ -21,32 +28,35 @@
                                 </svg>
                             </a>    
                         </td>
-                        <td class="view-message  dont-show">{{ message.title }} 
-                        {% if message.isRead != true %}
-                         <small class="badge badge-danger text-light">Nouveau message</small>
-                        {% endif %}
+                        <td>
+                            {{ message.title }} 
+                            {% if message.isRead != true %}
+                            <div class="badge badge-gradient-danger rounded-pill badge-sm text-light text-uppercase">Nouveau message</div>
+                            {% endif %}
                         </td>
-                        <td class="view-message  dont-show">De : {{ message.sender.personnel.nom }} {{ message.sender.personnel.prenom }}</td>
-                        <td class="view-message ">
-                        {% if message.title == 'Demande validation : Ordre de mission' %}
-                            <a href="{{ path('user_document', {repo: 'OrdreMission', id: message.message, idMsg:message.id}) }}">
-                                Voir la demande
-                            </a>
-                        {% elseif message.title == 'Demande validation : Absence' %}
-                            <a href="{{ path('user_document', {repo: 'Absence', id: message.message, idMsg:message.id}) }}">
-                                Voir la demande
-                            </a>
-                        {% else %}
-                            <a href="{{ path("read", {id: message.id}) }}">Lire le message</a>
-                        {% endif %}
+                        <td><i class="mdi mdi-paperclip text-info"></i>De : {{ message.sender.personnel.nom }} {{ message.sender.personnel.prenom }}</td>
+                        <td>
+                            {% if message.title == 'Demande validation : Ordre de mission' %}
+                                <a href="{{ path('user_document', {repo: 'OrdreMission', id: message.message, idMsg:message.id}) }}">
+                                    Voir la demande
+                                </a>
+                            {% elseif message.title == 'Demande validation : Absence' %}
+                                <a href="{{ path('user_document', {repo: 'Absence', id: message.message, idMsg:message.id}) }}">
+                                    Voir la demande
+                                </a>
+                            {% else %}
+                                <a href="{{ path("read", {id: message.id}) }}">Lire le message</a>
+                            {% endif %}
                         </td>
-                        <td class="view-message  text-right"><i class="fa fa-paperclip"></i> {{ message.createdAt|date('d/m/Y à H:i') }}</td>
+                        <td class="text-right"><i class="mdi mdi-timer text-success"></i> {{ message.createdAt|date('d/m/Y à H:i') }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-        <div class="pagination">
-            {{knp_pagination_render(messages) }}
-        </div><br>
+            <div class="pagination mt-4">
+                {{knp_pagination_render(messages) }}
+            </div>
+        </div>      
+    </div>
 </div>
 {% endblock %}

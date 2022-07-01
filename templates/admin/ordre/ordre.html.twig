@@ -3,9 +3,25 @@
 {% block title %}Ordre de mission{% endblock %}
  
 {% block body %}
-<div class="container">
+
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi mdi-file"></i>
+        </span> Ordre de mission
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <button class="breadcrumb-item btn-sm btn btn-gradient-primary btn-icon-text" onClick="imprimer('sectionAimprimer')">
+                Imprimer <i class="mdi mdi-printer btn-icon-append"></i>
+            </button>
+         </ul>
+    </nav>
+</div>
+
+<div class="card">
     <div id="sectionAimprimer" style="padding:0 40px 0 40px; font-family:times">
-        <img src="{{ asset('uploads/images/parametres/' ~ parametre.enTeteOrdreMission) }}" style="width=100%; height:222px"> 
+        <img src="{{ asset('uploads/images/parametres/' ~ parametre.enTeteOrdreMission) }}" width="55%"> 
         <center>   
             <h3>ORDRE DE MISSION</h3>
                 {{document.frais}} 
@@ -37,9 +53,9 @@
         </div>
     </div>
     {% if document.transport == 'Véhicule de service' and  document.statut != 'En cours de traitement' %}
-        <div class="alert-light text-center">
+        <div class="p-4 text-center">
         {{ form_start(form) }}
-            <div class="row align-items-end">
+            <div class="form-row align-items-baseline">
                 <div class="col-md-4">
                         {{form_row(form.vehicule)}}
                 </div>
@@ -49,15 +65,11 @@
                 <div class="col-md-4">
                     {{form_row(form.submit)}}
                 </div>
-            </div><br>
+            </div>
         {{ form_end(form) }}
-        </div><br>
+        </div>
     {% endif %}
 </div>
-    <center>
-      <button class="button" onClick="imprimer('sectionAimprimer')">
-        <i class="fa fa-print" aria-hidden="true"></i> Imprimer
-      </button>
-    <center><br>
+
 {% endblock %}
 

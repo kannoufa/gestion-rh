@@ -3,7 +3,23 @@
 {% block title %}طلب رخصة أو إذن بالتغيب{% endblock %}
  
 {% block body %}
-<div class="container">    
+
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi mdi-file"></i>
+        </span> Demande d'absence
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <button class="breadcrumb-item btn-sm btn btn-gradient-primary btn-icon-text" onClick="imprimer('sectionAimprimer')">
+                Imprimer <i class="mdi mdi-printer btn-icon-append"></i>
+            </button>
+         </ul>
+    </nav>
+</div>
+
+<div class="card">   
     <div dir="rtl" lang="ar" id="sectionAimprimer">
         {% for i in 0..2 %}
             <div style="text-align: right; line-height: 0.5; padding:30px 40px 0 40px;font-family:times; font-size: 19px">
@@ -38,11 +54,7 @@
         {% endfor %}                
     </div>
 </div>
-    <center>
-        <button class="button" onClick="imprimer('sectionAimprimer')">
-            <i class="fa fa-print" aria-hidden="true"></i> Imprimer
-        </button>
-    <center><br>    
+   
 {% endblock %}
 
 

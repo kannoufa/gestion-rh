@@ -13,7 +13,50 @@ class TwigBootstrapExtension extends AbstractExtension
         return [
             new TwigFilter('type', [$this, 'TypeFilter']),
             new TwigFilter('cause', [$this, 'CauseFilter']),
+            new TwigFilter('typedemande', [$this, 'TypeDemandeFilter']),
         ];
+    }
+
+    public function TypeDemandeFilter($content): string
+    {
+        if ($content == 'Nouvelle demande') {
+            $color = 'danger';
+        }
+
+        if ($content == 'en cours de traitement') {
+            $color = 'warning';
+        }
+
+        if ($content == 'Disponible') {
+            $color = 'success';
+        }
+
+        if ($content == 'Reçu') {
+            $color = 'success';
+        }
+
+        if ($content == 'Refusé') {
+            $color = 'dark';
+        }
+
+        if ($content == 'En attante de validation par le département') {
+            $color = 'info';
+        }
+
+        if ($content == 'Validé par le département') {
+            $color = 'success';
+        }
+
+        if ($content == 'Refusé par le département') {
+            $color = 'danger';
+        }
+
+        if ($content == 'Refusé par l\'administration') {
+            $color = 'danger';
+        }
+   
+
+        return '<span class="badge rounded-pill badge-gradient-' . $color . '">' . $content . '</span>';
     }
 
     public function TypeFilter($content): string
@@ -38,7 +81,7 @@ class TwigBootstrapExtension extends AbstractExtension
             $color = 'primary';
         }
 
-        return '<span class="badge bg-' . $color . '">' . $type . '</span>';
+        return '<span class="badge badge-gradient-' . $color . '">' . $type . '</span>';
     }
 
     public function CauseFilter($content): string

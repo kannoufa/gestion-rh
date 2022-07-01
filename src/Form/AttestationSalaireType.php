@@ -18,11 +18,14 @@ class AttestationSalaireType extends AbstractType
                 'choices' => $this->getType(),
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control mb-4 mr-sm-2'
                 ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Demander l\'attestation',
+                'attr' => [
+                    'class' => 'btn btn-gradient-primary mr-2'
+                ],
             ]);
     }
 

@@ -3,28 +3,37 @@
 {% block title %}Historique de demandes{% endblock %}
  
 {% block body %}
-<div class="container">
-        <center><img src="{{asset('assets/images/logo.png')}}" style="align: right; " width="370px"></center>
-        <hr>
-        <h1>historique des demandes effectués</h1>  
-            {{ form_start(form) }}
-                <div class="form-row align-items-baseline ">
-                    <div class="col-md-4">{{form_row(form.ppr)}}</div>
-                    <div class="col-md-4">{{form_row(form.typeDemande)}}</div>
-                    <div class="col-md-2">{{form_row(form.submit)}}</div>
-                </div><br>
-            {{ form_end(form) }}       
-            <table class="table table-striped">
+
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-history"></i>
+        </span> Historique des demandes effectués
+    </h3>
+</div>
+
+ <div class="card">
+    <div class="card-body"> 
+        {{ form_start(form) }}
+            <div class="form-row align-items-baseline">
+                <div class="col-md-4">{{form_row(form.ppr)}}</div>
+                <div class="col-md-4">{{form_row(form.typeDemande)}}</div>
+                <div class="col-md-2">{{form_row(form.submit)}}</div>
+            </div>
+        {{ form_end(form) }}    
+             
+        <div class="table-responsive"> 
+            {% if documents|length > 0 %} 
+            <table class="table text-center">
                 <thead>
                     <tr>
-                    <th><i class="fa fa-user " aria-hidden="true"></i> Personnel</th>
-                    <th><i class="fa fa-window-maximize " aria-hidden="true"></i> Type de la demande</th>
-                    <th><i class="fa fa-calendar" aria-hidden="true"></i> Date d'envoi</th>
-                    <th><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Date de reçu</th>
+                    <th>Personnel</th>
+                    <th>Type de la demande</th>
+                    <th>Date d'envoi</th>
+                    <th>Date de reçu</th>
                     <th>Voir la demande</th>
                     </tr>
                 </thead>
-                {% if documents|length > 0 %}
                 <tbody>
                     {% for document in documents %}
                         <tr>
@@ -34,8 +43,8 @@
                             <td>{{ document.dateRecu | date('d/m/Y à H:i') }}</td>
                             {% if document.typeDemande != 'AttestationSalaire' %}
                                 <td>
-                                    <a href="{{ path('admin_document', {repo: document.typeDemande, id: document.idDemande}) }}" class="btn btn-info btn-sm">
-                                        <i class="fa fa-eye" aria-hidden="true"></i > Voir
+                                    <a href="{{ path('admin_document', {repo: document.typeDemande, id: document.idDemande}) }}" class="btn btn-outline-primary btn-sm btn-icon-text">
+                                        <i class="mdi mdi-eye btn-icon-prepend" aria-hidden="true"></i> Voir
                                     </a>
                                 </td>
                             {% else %}
@@ -48,8 +57,10 @@
             {% else %}
                 <center><p class="badge rounded-pill bg-danger">Il n'y a aucune demande</p></center>
             {% endif %}
-            <div class="pagination">
+            <div class="pagination m-4">
                 {{knp_pagination_render(documents) }}
-            </div><br>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

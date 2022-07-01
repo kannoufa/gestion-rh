@@ -19,13 +19,13 @@ class MessageType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 "attr" => [
-                    "class" => "form-control",
+                    'class' => "form-control mb-4 mr-sm-2",
                     'placeholder' => 'objet du message ...'
                 ]
             ])
             ->add('message', TextareaType::class, [
                 "attr" => [
-                    "class" => "form-control",
+                    'class' => "form-control mb-4 mr-sm-2",
                     'placeholder' => 'contenu du message ...'
                 ]
             ])
@@ -34,11 +34,14 @@ class MessageType extends AbstractType
                     return $user->getPersonnel()->getNom() . ' ' . $user->getPersonnel()->getPrenom();
                 },
                 "attr" => [
-                    "class" => "form-control"
+                    'class' => "form-control mb-4 mr-sm-2"
                 ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer le message',
+                'attr' => [
+                    'class' => 'btn btn-block btn-gradient-primary mb-2'
+                ],
             ]);
     }
 

@@ -18,9 +18,10 @@ class AbsenceType extends AbstractType
     {
         $builder
             ->add('cause', ChoiceType::class, [
+                'label' => 'Cause',
                 'choices' => $this->getCauses(),
                 'attr' => [
-                    'class' => 'form-control text-right'
+                    'class' => 'form-control mb-4 mr-sm-2 text-right'
                 ]
             ])
             ->add('duree', IntegerType::class, [
@@ -28,30 +29,38 @@ class AbsenceType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'placeholder' => '... عدد الأيام',
-                    'class' => 'form-control text-right'
+                    'class' => 'form-control mb-4 mr-sm-2 text-right'
                 ],
             ])
             ->add('apartir', DateType::class, [
+                'label' => 'à partir',
                 'widget' => 'single_text',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'jj/mm/aaaa ابتداءا من',
-                    'class' => 'form-control text-right'
+                    'class' => 'form-control mb-4 mr-sm-2 text-right'
                 ],
             ])
             ->add('jusquA', DateType::class, [
+                'label' => 'Jusqu\'à',
                 'widget' => 'single_text',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'jj/mm/aaaa الى',
-                    'class' => 'form-control text-right'
+                    'class' => 'form-control mb-4 mr-sm-2 text-right'
                 ],
             ])
             ->add('motifFile', FileType::class, [
                 'required' => true,
+                'attr' => [
+                    'class' => 'btn btn-gradient-secondary btn-block btn-sm mr-2 mb-2'
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer la demande',
+                'attr' => [
+                    'class' => 'btn btn-gradient-primary mr-2'
+                ],
             ]);
     }
 

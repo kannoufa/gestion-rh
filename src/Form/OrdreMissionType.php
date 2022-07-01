@@ -20,23 +20,26 @@ class OrdreMissionType extends AbstractType
         $builder
             ->add('objet', TextType::class, [
                 'required' => true,
+                'label' => false,
                 'attr' => [
                     'placeholder' => 'objet de ma mission ...',
-                    'class' => 'form-control'
+                    'class' => 'form-control mb-4 mr-sm-2'
                 ],
             ])
             ->add('destination', TextType::class, [
                 'required' => true,
+                'label' => false,
                 'attr' => [
                     'placeholder' => 'destination de la mission (adresse) ...',
-                    'class' => 'form-control'
+                    'class' => 'form-control mb-4 mr-sm-2'
                 ],
             ])
             ->add('membres', TextType::class, [
                 'required' => true,
+                'label' => false,
                 'attr' => [
                     'placeholder' => 'les membres de la mission ...',
-                    'class' => 'form-control'
+                    'class' => 'form-control mb-4 mr-sm-2'
                 ],
             ])
             ->add('date_depart', DateType::class, [
@@ -45,7 +48,7 @@ class OrdreMissionType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'date de départ de la mission ...',
-                    'class' => 'form-control'
+                    'class' => 'form-control mb-4 mr-sm-2'
                 ],
             ])
             ->add('heure_dep', TextType::class, [
@@ -53,7 +56,7 @@ class OrdreMissionType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'hh:mm',
-                    'class' => 'form-control'
+                    'class' => 'form-control mb-4 mr-sm-2'
                 ],
             ])
             ->add('date_retour', DateType::class, [
@@ -62,14 +65,14 @@ class OrdreMissionType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'date de retour de la mission  ...',
-                    'class' => 'form-control'
+                    'class' => 'form-control mb-4 mr-sm-2'
                 ],
             ])
             ->add('heure_retour', TextType::class, [
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'hh:mm',
-                    'class' => 'form-control'
+                    'class' => 'form-control mb-4 mr-sm-2'
                 ],
             ])
             ->add('frais', ChoiceType::class, [
@@ -77,13 +80,19 @@ class OrdreMissionType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Oui/Non?',
-                    'class' => 'form-control'
+                    'class' => 'form-control mb-4 mr-sm-2'
                 ],
             ])->add('motifFile', FileType::class, [
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'class' => 'btn btn-gradient-secondary btn-block btn-sm mr-2 mb-2'
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer l\'ordre de mission',
+                'attr' => [
+                    'class' => 'btn btn-gradient-primary mr-2'
+                ],
             ]);
     }
 

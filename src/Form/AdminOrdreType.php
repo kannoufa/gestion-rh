@@ -22,20 +22,20 @@ class AdminOrdreType extends AbstractType
                     return $vehicule->getNom() . ' - ' . $vehicule->getMatricule();
                 },
                 "attr" => [
-                    "class" => "form-control"
+                    "class" => "form-control mb-4 mr-sm-2"
                 ]
             ])->add('chauffeur', EntityType::class, [
                 'label' => 'Chauffeur',
                 "class" => Chauffeur::class,
                 "choice_label" => "nomPrenom",
                 "attr" => [
-                    "class" => "form-control"
+                    "class" => "form-control mb-4 mr-sm-2"
                 ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [
-                    'class' => 'col button'
+                    'class' => 'btn btn-block btn-gradient-primary mb-2'
                 ],
             ]);
     }

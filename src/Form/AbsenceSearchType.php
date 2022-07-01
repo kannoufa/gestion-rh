@@ -20,7 +20,7 @@ class AbsenceSearchType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'P.P.R',
-                    'class' => 'col'
+                    "class" => "form-control mb-4 mr-sm-2"
                 ],
             ])
             ->add('annee', ChoiceType::class, [
@@ -32,13 +32,13 @@ class AbsenceSearchType extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'class' => 'form-control'
+                    "class" => "form-control mb-4 mr-sm-2"
                 ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Rechercher',
                 'attr' => [
-                    'class' => 'col btn-sm btn-success'
+                    'class' => 'btn btn-gradient-primary mb-2'
                 ],
             ]);
     }

@@ -5,20 +5,20 @@
 {% block titre %}Attestations de salaire{% endblock %}
 
 {% block col_head %}
-    <th><i class="fa fa-bell-o" aria-hidden="true"></i> Statut</th>
-    <th><i class="fa fa-window-maximize" aria-hidden="true"></i> Type</th> 
+    <th>Statut</th>
+    <th>Type</th> 
 {% endblock %}
 
 {% block col_body %}
-    <td><span class="btn btn-sm rounded-pill btn-danger">{{ document.statut}}</span></td>            
-    <td><span class="btn btn-sm rounded-pill btn-light text-secondary"> {{document.type}} </span></td>              
+    <td>{{ document.statut | typedemande | raw }}</span></td>            
+    <td><span class="badge rounded-pill badge-gradient-light text-dark"> {{document.type}} </span></td>              
 {% endblock %}
  
 {% block buttons %}
-    <a href="{{ path('admin_change_statut', {repo: 'AttestationSalaire', id: document.id, etat: 'Disponible'}) }}" class="btn btn-info btn-sm">
-        <i class="fa fa-hourglass-end" aria-hidden="true"></i> Disponible
+    <a href="{{ path('admin_change_statut', {repo: 'AttestationSalaire', id: document.id, etat: 'Disponible'}) }}" class="btn btn-outline-secondary btn-sm btn-icon-text">
+        <i class="mdi mdi-av-timer btn-icon-prepend" aria-hidden="true"></i> Disponible
     </a>
-    <a href="{{ path('admin_change_statut', {repo: 'AttestationSalaire', id: document.id, etat: 'Reçu'}) }}" class="btn btn-success btn-sm">
-        <i class="fa fa-check" aria-hidden="true"></i> Reçu
+    <a href="{{ path('admin_change_statut', {repo: 'AttestationSalaire', id: document.id, etat: 'Reçu'}) }}" class="btn btn-outline-secondary btn-sm btn-icon-text">
+        <i class="mdi mdi-check-all btn-icon-prepend" aria-hidden="true"></i> Reçu
     </a>
 {% endblock %}

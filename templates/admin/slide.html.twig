@@ -1,157 +1,200 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">        
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <title>{% block title %}{% endblock %}</title>        
-    </head>
-    <body>
-        <div class="area"></div>
-            <nav class="main-menu">
-                <ul>              
-                    <li>
-                        <a href="{{ path('admin_document', {repo: 'Personnel', id: app.user.personnel.id}) }}"  class="slide">
-                            <i class="fa fa-user fa-2x"></i>
-                            <span class="nav-text">
-                                {{ app.user.personnel.nom }} {{ app.user.personnel.prenom }}
-                            </span>
-                        </a>
-                    
-                    </li><br><br>
-                    <li>
-                        <a href="{{ path('admin') }}" class="slide">
-                            <i class="fa fa-home fa-2x"></i>
-                            <span class="nav-text">
-                                Accueil
-                            </span>
-                        </a>
-                    
-                    </li>
-                    <li class="has-subnav">
-                        <a href="{{ path('admin_liste_documents', {repo: 'AttestationTravail'}) }}"  class="slide">
-                            <i class="fa fa-file fa-2x"></i>
-                            <span class="nav-text">
-                                Attestations de travail
-                            </span>
-                        </a>
-                        
-                    </li>
-                    <li class="has-subnav">
-                        <a href="{{ path('admin_liste_documents', {repo: 'AttestationSalaire'}) }}"  class="slide">
-                        <i class="fa fa-file-text fa-2x">
-                                
-                        </i>
-                            <span class="nav-text">
-                                Attestations de salaire
-                            </span>
-                        </a>
-                        
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_liste_documents', {repo: 'Absence'}) }}" class="slide">
-                            <i class="fa fa-list-alt fa-2x"></i>
-                            <span class="nav-text">
-                                Demandes d'absence
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_liste_documents', {repo: 'OrdreMission'}) }}" class="slide">
-                            <i class="fa fa-list fa-2x"></i>
-                            <span class="nav-text">
-                            Ordres de mission
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_add_personnel') }}" class="slide">
-                            <i class="fa fa-user-plus fa-2x"></i>
-                            <span class="nav-text">
-                            Ajout d'un personnel
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_liste_documents', {repo: 'Personnel'}) }}" class="slide">
-                            <i class="fa fa-list-ol fa-2x"></i>
-                            <span class="nav-text">
-                            Liste des personnels
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_tableau_absence') }}" class="slide">
-                            <i class="fa fa-th fa-2x"></i>
-                            <span class="nav-text">
-                            Tableau d'absence
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('message') }}" class="slide">
-                            <i class="fa fa-envelope fa-2x"></i>
-                            <span class="nav-text">
-                            Messagerie
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('user') }}" class="slide" class="slide">
-                            <i class="fa fa-arrow-left fa-2x"></i>
-                            <span class="nav-text">
-                            Espace d'utilisateur
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_liste_documents', {repo: 'Historique'}) }}" class="slide">
-                            <i class="fa fa-history fa-2x"></i>
-                            <span class="nav-text">
-                            Historique de demandes
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_parametres') }}" class="slide">
-                            <i class="fa fa-cog fa-2x"></i>
-                            <span class="nav-text">
-                            Paramètres
-                            </span>
-                        </a>
-                    </li>
-                </ul>
+    <title>{% block title %}{% endblock %}</title>
+    
 
-                <ul class="logout">
-                    <li>
-                    <a href="{{ path('security_logout') }}" class="slide">
-                            <i class="fa fa-power-off fa-2x"></i>
-                            <span class="nav-text">
-                                Logout
-                            </span>
-                        </a>
-                    </li>  
+    <link rel="stylesheet" href="{{asset('assets/vendors/mdi/css/materialdesignicons.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendors/css/vendor.bundle.base.css')}}">
+
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+
+  </head>
+  <body>
+    <div class="container-scroller">
+
+      <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+          <a class="navbar-brand brand-logo" href="{{ path('admin') }}">
+            <img src="{{asset('assets/images/logo.png')}}" alt="logo" />
+          </a>
+          <a class="navbar-brand brand-logo-mini" href="{{ path('admin') }}">
+            <img src="{{asset('assets/images/logo-mini.svg')}}" alt="logo" />
+          </a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-stretch">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+          </button>
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item nav-profile dropdown">
+              <a class="nav-link" href="{{ path('admin_document', {repo: 'Personnel', id: app.user.personnel.id}) }}">
+                <div class="nav-profile-img">
+                  <img src="{{ asset('uploads/images/personnels/' ~ app.user.personnel.filename) }}" alt="image">
+                  <span class="availability-status online"></span>
+                </div>
+                <div class="nav-profile-text">
+                  <p class="mb-1 text-black">{{ app.user.personnel.nom }} {{ app.user.personnel.prenom }}</p>
+                </div>
+              </a>
+            </li>
+            <li class="nav-item d-none d-lg-block full-screen-link">
+              <a class="nav-link">
+                <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+              </a>
+            </li>
+            <li class="nav-item nav-logout d-none d-lg-block">
+              <a class="nav-link" href="{{ path('message') }}">
+                <i class="mdi mdi-email-outline"></i>
+              </a>
+            </li>
+
+            <li class="nav-item nav-logout d-none d-lg-block">
+              <a class="nav-link" href="{{ path('security_logout') }}">
+                <i class="mdi mdi-power"></i>
+              </a>
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="mdi mdi-menu"></span>
+          </button>
+        </div>
+      </nav>
+      <div class="container-fluid page-body-wrapper">
+
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item nav-profile">
+              <a class="nav-link" href="{{ path('admin_document', {repo: 'Personnel', id: app.user.personnel.id}) }}">
+                <div class="nav-profile-image">
+                  <img src="{{ asset('uploads/images/personnels/' ~ app.user.personnel.filename) }}" alt="profile">
+                  <span class="login-status online"></span>
+                </div>
+                <div class="nav-profile-text d-flex flex-column">
+                  <span class="font-weight-bold mb-2"> {{ app.user.personnel.nom }} {{ app.user.personnel.prenom }} </span>
+                  <span class="text-secondary text-small"> {{ app.user.personnel.ppr }} </span>
+                </div>
+                <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('admin') }}">
+                <span class="menu-title">Accueil</span>
+                <i class="mdi mdi-home menu-icon"></i>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#demandes" aria-expanded="false">
+                <span class="menu-title">Gestion de demandes</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi mdi-bookmark menu-icon"></i>
+              </a>
+              <div class="collapse" id="demandes">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> 
+                    <a class="nav-link" href="{{ path('admin_liste_documents', {repo: 'AttestationTravail'}) }}">
+                        Attestations de travail
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_liste_documents', {repo: 'AttestationSalaire'}) }}">
+                        Attestations de salaire
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_liste_documents', {repo: 'Absence'}) }}">
+                        Demandes d'absence
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_liste_documents', {repo: 'OrdreMission'}) }}">
+                        Ordres de mission
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_liste_documents', {repo: 'Historique'}) }}">
+                        Historique de demandes
+                    </a>
+                  </li>
                 </ul>
-            </nav>   
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#personnels" aria-expanded="false">
+                <span class="menu-title">Gestion de personnels</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-contacts menu-icon"></i>
+              </a>
+              <div class="collapse" id="personnels">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> 
+                    <a class="nav-link" href="{{ path('admin_add_personnel') }}">
+                        Ajout d'un personnel
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_liste_documents', {repo: 'Personnel'}) }}">
+                        Liste des personnels
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link"  href="{{ path('admin_tableau_absence') }}">
+                <span class="menu-title">Tableau d'absence</span>
+                <i class="mdi mdi-table-large menu-icon"></i>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('admin_parametres') }}">
+                <span class="menu-title">Paramètres</span>
+                <i class="mdi mdi-settings menu-icon"></i>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('user') }}">
+                <span class="menu-title">Espace d'utilisateur</span>
+                <i class="mdi mdi mdi-account-switch menu-icon"></i>
+              </a>
+            </li>
+
+            
+            
+          </ul>
+        </nav>
+        <div class="main-panel">
+          <div class="content-wrapper">
             {% block body %}{% endblock %}
-    <style>
-        body {
-            font-family: 'Open Sans', sans-serif;
-            color: #1a1a1a;
-            background-color: #F1F1F1; }
-        .container {
-            margin-top: 30px;
-            margin-bottom: 15px;
-            margin-left: 90px;
-            min-height: 90vh;
-            width:100%;
-            background-color: #ffffff;
-            border-radius: 5px;
-            box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1); }
-    </style>
+          </div>
+          
+          <footer class="footer">
+            <div class="container-fluid clearfix">
+              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Faculté des Sciences et Techniques Marrakech 2021</span>
+            </div>
+          </footer>
+        </div>
+        
+      </div>
+      
+    </div>
 
     <script src="{{asset('assets/js/script.js')}}"></script>
+
+    <script src="{{asset('assets/vendors/js/vendor.bundle.base.js')}}"></script>
+
+    <script src="{{asset('assets/js/off-canvas.js')}}"></script>
+    <script src="{{asset('assets/js/hoverable-collapse.js')}}"></script>
+    <script src="{{asset('assets/js/misc.js')}}"></script>
+
+  </body>
 </html>

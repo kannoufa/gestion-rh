@@ -3,94 +3,103 @@
 {% block title %}Paramètres{% endblock %}
  
 {% block body %}
-<div class="container">
-        <center><img src="{{asset('assets/images/logo.png')}}" style="align: right; " width="370px"></center>
-        <hr><br>
-        <div class="row">
-          <div class="col-md-5">
-            <div class="small-box bg-info">
-              <div class="inner">
-                  <h3>Départements et services</h3>
-              </div>
-              <div class="icon">
-                  <i class="fa fa-building"></i>
-              </div>
-              <a class="small-box-footer" href="{{ path('admin_liste_documents', {repo: 'Departement'}) }}">
-                plus d'info <i class="fa fa-arrow-circle-right"></i>
-              </a>
-            </div>
-          </div>
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-settings"></i>
+        </span> Paramètres
+    </h3>
+</div>
 
-          <div class="col-md-4">
-            <div class="small-box bg-success">
-              <div class="inner">
-                  <h3>Véhicules de service</h3>
-              </div>
-              <div class="icon">
-                  <i class="fa fa-bus"></i>
-              </div>
-              <a class="small-box-footer" href="{{ path('admin_liste_documents', {repo: 'Vehicule'}) }}">
-              plus d'info <i class="fa fa-arrow-circle-right"></i>
-              </a>
-            </div>
-          </div>
+<div class="row">
+  <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-danger card-img-holder text-white">
+      <div class="card-body">
+          <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
+          <h4 class="font-weight-normal mb-3"> <i class="mdi mdi-bank mdi-24px float-right"></i></h4>
+          <h2 class="mb-5">Départements et services</h2>
+          <h6 class="card-text">
+            <a class="text-white" href="{{ path('admin_liste_documents', {repo: 'Departement'}) }}">
+                plus d'info <i class="mdi mdi-arrow-right-bold-circle"></i>
+            </a>
+        </h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-info card-img-holder text-white">
+      <div class="card-body">
+        <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
+          <h4 class="font-weight-normal mb-3"> <i class="mdi mdi-bus mdi-24px float-right"></i></h4>
+          <h2 class="mb-5">Véhicules de service</h2>
+          <h6 class="card-text">
+            <a class="text-white" href="{{ path('admin_liste_documents', {repo: 'Vehicule'}) }}">
+                plus d'info <i class="mdi mdi-arrow-right-bold-circle"></i>
+            </a>
+          </h6>
+        </div>
+      </div>
+  </div>
+  <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-success card-img-holder text-white">
+      <div class="card-body">
+        <img src="{{asset('assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
+          <h4 class="font-weight-normal mb-3"><i class="mdi mdi-account mdi-24px float-right"></i></h4>
+          <h2 class="mb-5">Chauffeurs</h2>
+          <h6 class="card-text">
+            <a class="text-white" href="{{ path('admin_liste_documents', {repo: 'Chauffeur'}) }}">
+                plus d'info <i class="mdi mdi-arrow-right-bold-circle"></i>
+            </a>
+          </h6>
+      </div>
+    </div>
+  </div>          
+</div>
 
-          <div class="col-md-3">
-            <div class="small-box bg-warning">
-              <div class="inner">
-                  <h3>Chauffeurs</h3>
-              </div>
-              <div class="icon">
-                  <i class="fa fa-male"></i>
-              </div>
-              <a class="small-box-footer" href="{{ path('admin_liste_documents', {repo: 'Chauffeur'}) }}">
-              plus d'info <i class="fa fa-arrow-circle-right"></i>
-              </a>
-            </div>
-          </div>
-        </div>        
-      <br>
-      <div class="row">
-          <div class="col-md-6"><h4 class="text-info">Modifier l'en-tête de l'ordre de mission</h4></div>
-          <div class="col-md-6"><h4 class="text-info">Modifier le logo de la FSTG</h4></div>
-      </div>
-      {{form_start(form)}}
-      <div class="row">        
-          <div class="col-md-6">
-                <div class="small-box bg-light">
-                  <div class="inner">
-                      <img src="{{ asset('uploads/images/parametres/' ~ parametre.enTeteOrdreMission) }}" style="width=100%; height:180px">
-                  </div>                 
-                  <a class="small-box-footer">
-                    <div class="row">
-                      <div class="col-md-8">                   
-                        {{form_row(form.enTeteOrdreMissionFile)}}
-                      </div>
-                      <div class="col-md-4">
-                        <button type="submit" class="btn-sm">Modifier</button>
-                      </div>
-                    </div>
-                  </a>
+{{form_start(form)}}
+<div class="row">
+    <div class="col-md-6 stretch-card grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="text-primary">Modifier l'en-tête de l'ordre de mission</h4>
+            <div class="inner">
+              <img src="{{ asset('uploads/images/parametres/' ~ parametre.enTeteOrdreMission) }}" width="100%">
+            </div>                 
+            <a class="small-box-footer">
+              <div class="row">
+                <div class="col-md-8">                   
+                  {{form_row(form.enTeteOrdreMissionFile)}}
                 </div>
-          </div>
-          <div class="col-md-6">
-                <div class="small-box bg-light">
-                  <div class="inner">
-                      <img src="{{ asset('uploads/images/parametres/' ~ parametre.logo) }}" style="width=100%; height:180px">
-                  </div>
-                  <a class="small-box-footer">
-                    <div class="row">
-                      <div class="col-md-8">                   
-                        {{form_row(form.logoFile)}}
-                      </div>
-                      <div class="col-md-4">
-                        <button type="submit" class="btn-sm">Modifier</button>
-                      </div>
-                    </div>
-                  </a>
+                <div class="col-md-4">
+                  <button type="submit" class="btn btn-block btn-gradient-primary mb-2">Modifier</button>
                 </div>
-          </div>      
+              </div>
+            </a>
+        </div>
       </div>
-      {{form_end(form)}}
-</div>       
+    </div>
+
+    <div class="col-md-6 stretch-card grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="text-primary">Modifier le logo de la FSTG</h4>
+            <div class="inner">
+              <img src="{{ asset('uploads/images/parametres/' ~ parametre.logo) }}" width="100%">
+            </div>                 
+            <a class="small-box-footer">
+              <div class="row">
+                <div class="col-md-8">                   
+                  {{form_row(form.logoFile)}}
+                </div>
+                <div class="col-md-4">
+                  <button type="submit" class="btn btn-block btn-gradient-primary mb-2">Modifier</button>
+                </div>
+              </div>
+            </a>
+        </div>
+      </div>
+    </div>
+</div>
+{{form_end(form)}}
+ 
 {% endblock %}

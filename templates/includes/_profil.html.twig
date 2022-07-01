@@ -1,150 +1,105 @@
-<center><img src="{{ asset('assets/images/logo.png') }}" style="align: right; " width="370px"></center>
-    <hr>
-<div class="mt-4">  
-    <div>
-        <div class="row">      
-            <div class="col-md-4"> 
-                <center>
-                    {% if document.filename %}
-                        <img src="{{ asset('uploads/images/personnels/' ~ document.filename) }}" style="width:50%; height:50%">
-                    {% else %}
-                        <img src="{{ asset('uploads/images/personnels/avatar.jpg') }}" style="width:200px; height:150px"><br>
-                        Vous n'avez pas définit d'image pour ce personnel
-                    {% endif %}
-                </center>
-            </div>
-            <div class="col-md-8"> 
-                    <h1>Données de {{document.nom}} {{document.prenom}}</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">  
-                <table class="table table-striped">
-                    <tr>
-                        <td>P.P.R</td>
-                        <td>
-                            <b> {{document.ppr}} </b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>CIN</td>
-                        <td><b> {{document.cin}} </b></td>
-                    </tr>
-                    <tr>
-                        <td>Prénom (Arabe)</td>
-                        <td><b> {{document.prenomAr}} </b></td>
-                    </tr>
-                    <tr>
-                        <td>Nom (Arabe)</td>
-                        <td><b> {{document.nomAr}} </b></td>
-                    </tr>
-                    <tr>
-                        <td>Nom (Français)</td>
-                        <td><b> {{document.nom}} </b></td>
-                    </tr>
-                    <tr>
-                        <td>Prénom (Français)</td>
-                        <td><b> {{document.prenom}} </b></td>
-                    </tr>
-                    <tr>
-                        <td>Date de naissance</td>
-                        <td><b> {{document.dateNaissance | date('d/m/Y')}} </b></td>
-                    </tr>
-                    <tr>
-                        <td>Nationalité (Arabe)</td>
-                        <td><b> {{document.nationaliteAr}} </b></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-md-4">  
-                <table class="table table-striped">
-                    <tr>
-                        <td>Sexe (Arabe)</td>
-                        <td><b> {{document.sexeAr}} </b></td>
-                    </tr>
-                    <tr>
-                        <td>Situation familiale (Arabe)</td>
-                        <td><b> {{document.situationFamilialeAr}} </b></td>
-                    </tr>
-                    <tr>
-                        <td>Situation administrative (Arabe)</td>
-                        <td><b> {{document.situationAdministrativeAr}} </b></td>
-                    </tr>
-                    <tr>
-                        <td>Ancienneté administrative</td>
-                        <td><b> {{document.ancienneteAdministrative}} </b></td>
-                    </tr>
-                    <tr>
-                        <td>Date de recrutement</td>
-                        <td>
-                            <b> {{document.dateRecrutement | date('d/m/Y')}} </b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Echellon</td>
-                        <td><b> {{document.echellon}} </b></td>
-                    </tr>
-                    <tr>
-                        <td>Date d'effet echellon</td>
-                        <td>
-                            <b> {{document.dateEffetEchelon | date('d/m/Y')}} </b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Ancienneté echellon</td>
-                        <td>
-                            <b> {{document.ancienneteEchelon }} </b>
-                        </td>
-                    </tr>
-                    
-                </table>
-            </div>
-            <div class="col-md-4">  
-                <table class="table table-striped">
-                    <tr>
-                        <td>Email</td>
-                        <td>
-                            <b> {{document.email}} </b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Grade</td>
-                        <td><b> {{document.gradeAr}} </b></td>
-                    </tr>
-                    <tr>
-                        <td>Date d'effet grade</td>
-                        <td>
-                            <b> {{document.dateEffetGrade | date('d/m/Y')}} </b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Ancienneté grade</td>
-                        <td>
-                            <b> {{document.anciennetegrade }} </b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Fonction</td>
-                        <td><b> {{document.fonction}} </b></td>
-                    </tr>
-                    <tr>
-                        <td>Date de fonction</td>
-                        <td>
-                            <b> {{document.dateFonction | date('d/m/Y')}} </b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Position</td>
-                        <td><b> {{document.position}} </b></td>
-                    </tr>
-                    <tr>
-                        <td>Date de position</td>
-                        <td>
-                            <b> {{document.datePosition | date('d/m/Y')}} </b>
-                        </td>
-                    </tr>
-                </table>
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-account-box"></i>
+        </span> Profil - {{document.nom}} {{document.prenom}}
+    </h3>
+</div>
+
+<div class="row">
+    <div class="col-md-9 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p class="card-description">Prénom (Arabe): <code>{{document.prenomAr}}</code></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="card-description">Nom (Arabe) : <code>{{document.nomAr}}</code></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="card-description">Sexe (Arabe) : <code>{{document.sexeAr}}</code></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p class="card-description">Date de naissance: <code>{{document.dateNaissance | date('d/m/Y')}}</code></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="card-description">Nationalité (Arabe) : <code>{{document.nationaliteAr}}</code></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="card-description">Situation familiale (Arabe) : <code>{{document.situationFamilialeAr}}</code></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p class="card-description">Situation administrative : <code>{{document.situationAdministrativeAr }}</code></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="card-description">Ancienneté administrative : <code>{{document.ancienneteAdministrative}}</code></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="card-description">Date de recrutement : <code>{{document.dateRecrutement | date('d/m/Y')}}</code></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p class="card-description">Echellon : <code> {{document.echellon }}</code></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="card-description">Date d'effet échellon : <code>{{document.dateEffetEchelon | date('d/m/Y')}}</code></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="card-description">Ancienneté echellon : <code>{{document.ancienneteEchelon}}</code></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p class="card-description">Grade : <code> {{document.grade }}</code></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="card-description">Date d'effet grade : <code>{{document.dateEffetGrade | date('d/m/Y')}}</code></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="card-description">Ancienneté grade : <code>{{document.anciennetegrade }}</code></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="card-description">Fonction : <code>{{document.fonction }}</code></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="card-description">Date de fonction : <code>{{document.dateFonction | date('d/m/Y')}}</code></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="card-description">Position : <code>{{document.position }}</code></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="card-description">Date de position : <code>{{document.datePosition | date('d/m/Y')}}</code></p>
+                        </div>
+                    </div>  
             </div>
         </div>
     </div>
+
+    <div class="col-md-3 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                    <h4 class="card-title">{{document.nom}} {{document.prenom}}</h4>
+                    <p class="card-description">P.P.R <code>{{document.ppr}}</code></p>
+                    <p class="card-description">CIN <code>{{document.cin}}</code></p>
+                    <div class="template-demo">
+                        {% if document.filename %}
+                            <img src="{{ asset('uploads/images/personnels/' ~ document.filename) }}" width="100%">
+                        {% else %}
+                            <img src="{{ asset('uploads/images/personnels/avatar.jpg') }}"  width="100%"><br>
+                            Vous n'avez pas définit d'image pour ce personnel
+                        {% endif %}
+                    </div>
+            </div>
+        </div>
+    </div>            
 </div>

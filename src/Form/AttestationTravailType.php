@@ -15,6 +15,9 @@ class AttestationTravailType extends AbstractType
         $builder
             ->add('submit', SubmitType::class, [
                 'label' => 'Demander une attestation de travail',
+                'attr' => [
+                    'class' => 'btn btn-gradient-primary mr-2'
+                ],
             ]);
     }
 
